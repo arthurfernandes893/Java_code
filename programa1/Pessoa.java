@@ -1,7 +1,7 @@
 public class Pessoa{
 //declaracao de campos
    private String nome;
-   private String Sobrenome;
+   private String sobrenome;
    private GregorianCalendar dataNasc; //importar//
    private int numCPF;
    
@@ -37,5 +37,9 @@ public int getnumCPF(){
     return numCPF;
 }
 
+//metodo toString//
+public toString(){
+    return "nome:"+ nome +"\nsobrenome:"+sobrenome+"\nnascimento:"+dataNasc+"\ncpf:"+ numCPF;
+}
 
 }
