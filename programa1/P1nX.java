@@ -1,143 +1,44 @@
-import java.io.BufferedReader;
+import java.io.*;
 import java.util.*;
 
 public class P1nX{
-    public class Pessoa{
-        //declaracao de campos
-           private String nome;
-           private String sobrenome;
-           private GregorianCalendar dataNasc; //importar//
-           private int numCPF;
-           
-           public float peso;
-           public float altura;
-        
-        //construtor para caso ideal com todas as infos passadas
-        Public Pessoa(String nomelido,String sobrenomelido,/*GregorianCalendar datalida,*/int numcpflido, float pesolido, float alturalida){
-            nome = nomelido;
-            sobrenome = sobrenomelido;
-            //data = datalida;
-            /* ou
-            data.year = datalida.year;
-            data.month = datalida.month;
-            data.dayOfMonth = datalida.dayOfMonth
-            */
-            numCPF = numcpflido;
-            peso = pesolido;
-            altura = alturalida;
-        }
-        
-        //metodos getter para informacoes sensiveis
-        public String getnome(){
-            return nome;
-        }
-        public String getsobrenome(){
-            return sobrenome;
-        }
-        public GregorianCalendar getdataNasc(){
-            return dataNasc;
-        }
-        public int getnumCPF(){
-            return numCPF;
-        }
-        
-        //metodo toString//
-        public String toString(){
-            return "nome:"+ nome +"\nsobrenome:"+sobrenome+"\nnascimento:"+dataNasc+"\ncpf:"+ numCPF;
-        }
-        
-        }
-
-    public class Homem extends Pessoa{
-        public String genero;
-        public int idade;
-
-        public Homem(String nomelido,String sobrenomelido,GregorianCalendar datalida,int numcpflido, float pesolido, float alturalida, String genero, int idade){
-            super(nomelido, sobrenomelido, datalida, numcpflido, pesolido, alturalida);
-            this.genero = genero;
-            this.idade = idade;
-        }
-
-        public String toString(){
-            return "nome:"+ getnome() +"\n sobrenome:"+getsobrenome()+ "\n nascimento:"+dataNasc+ "\n cpf:"+ numCPF+ "\n genero"+genero;
-        }
-    }
-    public class Mulher extends Pessoa{
-        public String genero;
-        public int idade;
-
-        public Mulher(String nomelido,String sobrenomelido,GregorianCalendar datalida,int numcpflido, float pesolido, float alturalida, String genero, int idade){
-            super();
-            this.genero = genero;
-            this.idade = idade;
-        }
-    }
-
-    public class ValidaCPF{
-        //validacao e formatacao 
-
-        //eh convertivel em cpf?
-        public static boolean isCPF(String scpf){
-            if()
-            return true;
-            else{
-                return false;
-            }
-        }
-
-        public static int toIntCPF(String scpf){
-            int icpf;
-            //percorrer a string vendo se ha pontos ou espacos e juntando tudo pra ter so numero//
-            //converter
-            icpf = parseInt(scpf);
-            return icpf;
-
-        }
-    }
-
-    public class ValidaData{ //porque esta errado??//
-    // metodos recebendo a data como int//
-        public static Boolean isDay(int day){
-            if(day>31 && day <1){
-                return false;
-            }
-            else{
-            return true;
-            }
-        }
-    
-        public static Boolean checkMonth(int month){
-            if(month>12 && month<1){
-                return false;
-            }
-            else{
-                return true;
-                }
-        }
-        public static Boolean checkYear(int year){
-            if(year<1920 && year>2023){ //o limite eh o ano corrente?//
-                return false;
-            }
-            else{
-                return true;
-                }
-        
-        }
-    }
-
-
+    public static String empty = "";
+    public static String masc = "masculino"; public static String fem ="feminino";
     public static void main(String[] args){
         //declaracao do buffered reader e da String line//
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in)); // declaracao do buffered reader//
         String line;
         int numCadastros;
-        //criacao do primeiro elemento//
+        //criacao do primeiro elemento - COLOCAR EM UM METODO//
+            while(args[0].equals(empty)){       
+                System.out.println("primeiro elemento - nome - nao foi inserido, tente novamwente:");
+                args[0] = inData.readLine();
+            }
+            while(args[1].equals(empty)){       
+                System.out.println("segundo elemento - sobrenome - nao foi inserido, tente novamwente:");
+                args[1] = inData.readLine();
+            }
+            while(!ValidaCPF.isCPF(args[2])){
+                System.out.println("Terceiro elemento - CPF - inserido errado. tente novamente:");
+                args[2] = inData.readLine();
+            }
+            while(args[3].length() != 7){
+                System.out.println("DATA inserida de forma ERRADA. tente novamente adicionando na forma ddmmaaaa, sem espacos nem demais caracteres:");
+                args[3] = inData.readLine();
+            }
+            while(!args[4].equals(masc) || !args[4].equals(fem)){
+                System.out.println("Genero errado. tente novamente (masculino ou feminino):");
+                args[4] = inData.readLine();
+            }
+            //adicionar condicao para a idade//
+
+
             //se o elemento de args que contem o genero for tal, cria o objeto tal, senao, cria o outro//
 
         //quantos cadastros?//
         System.out.println("Quantos usuarios a mais deseja cadastrar?");
         line = inData.readLine();
-        int numCadastros = parseInt(line);
+        int numCadastros = Integer.parseInt(line);
         while(!line.isdigit() || numCadastros<1){ // garantir que sera passado um numero inteiro, sem ./* //
             line = inData.readLine();
         }
@@ -145,9 +46,12 @@ public class P1nX{
             System.exit(1);
         }
         
+        //criacao do array p/ armazenar os objetos criados alocando o espaco adicional para o primeiro elemento criado//
+        Pessoa[] pessoas = new Pessoa[numCadastros+1]; 
         
-        Pessoa[] pessoas = new Pessoa[numCadastros+1]; //criacao do array p/ armazenar os objetos criados alocando o espaco adicional para o primeiro elemento criado//
-        
+        //inclusao do primeiro elemento passado por linha de comando://
+
+
         //leitura dos dados e criacao dos objetos//
         String nome; String sobrenome;
         int[] data_partes = new int[3];
@@ -155,8 +59,9 @@ public class P1nX{
         float peso, altura;  
         String genero,masc,fem;
         int idade;
-        masc = "masculino"; fem ="feminino";
-        for(int i = 0; i<pessoas.length; i++){
+        
+
+        for(int i = 0; i<(pessoas.length-1); i++){
             //ler infos e checar os valores, garantindo com while e metodos do CPF//
             System.out.println("Insira o nome:");
             line = inData.readLine();
@@ -169,28 +74,28 @@ public class P1nX{
             System.out.println("Insira a data de nascimento:");
                 System.out.println("Dia:");
                 line = inData.readLine();
-                data_partes[0] = parseInt(line);
+                data_partes[0] = Integer.parseInt(line);
                 
                 System.out.println("Mes:");
                 line = inData.readLine();
-                data_partes[1] = parseInt(line);
+                data_partes[1] = Integer.parseInt(line);
                 
                 System.out.println("Ano:");
                 line = inData.readLine();
-                data_partes[2] = parseInt(line);
+                data_partes[2] = Integer.parseInt(line);
 
-                //criacao do objeto da data//
-                ///////////////////////////
+                GregorianCalendar data = new GregorianCalendar(data_partes[2], data_partes[1], data_partes[0]);
+                
             
             System.out.println("CPF:");
             line = inData.readLine();
-            if(line.isCPF){
+            if(line.isCPF()){
                 cpf = line;
             }
 
             System.out.println("Peso:");
             line = inData.readLine();
-            peso = parseFloat(line);
+            peso = Integer.parseFloat(line);
             
             System.out.println("Altura:");
             line = inData.readLine();
@@ -198,7 +103,7 @@ public class P1nX{
             
             System.out.println("Idade:");
             line = inData.readLine();
-            idade = parseInt(line);
+            idade = Integer.parseInt(line);
 
             //ver qual o genero e instanciar o objeto correto//
             System.out.println("Genero (masculino ou feminino):");
@@ -209,11 +114,11 @@ public class P1nX{
             }
         
             if(genero.equals(masc)){
-                Homem cidadao = new Homem(nome,sobrenome,...,cpf,peso,altura,genero,idade); //falta data dps do sobrenome//
+                Homem cidadao = new Homem(nome,sobrenome,data,cpf,peso,altura,idade); //falta data dps do sobrenome//
                 
             }
             else{
-                Mulher cidadao = new Mulher(nome,sobrenome,...,cpf,peso,altura,genero,idade); //falta data dps do sobrenome//
+                Mulher cidadao = new Mulher(nome,sobrenome,data,cpf,peso,altura,idade); //falta data dps do sobrenome//
                    
             }
 
