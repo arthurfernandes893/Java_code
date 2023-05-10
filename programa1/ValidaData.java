@@ -26,5 +26,21 @@ public class ValidaData{ //porque esta errado??//
                     }
             
             }
+
+            public static int[] criadata1(String sdata){
+                int[] datacerta = new int[3];
+                String partes = "";
+                char[] charaux = sdata.toCharArray();
+                partes = String.copyValueOf(charaux,0,2); //usa String. no começom pelo msm motivo dos parses. sao metodos static das classes String,Integer, etc//
+                datacerta[0] = Integer.parseInt(partes);
+                
+                partes = String.copyValueOf(charaux,3,2);
+                datacerta[1] = Integer.parseInt(partes);
+                
+                partes = String.copyValueOf(charaux,5,4);
+                datacerta[2] = Integer.parseInt(partes);
+
+                return datacerta;
+            }
         }
 

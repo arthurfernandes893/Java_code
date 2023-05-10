@@ -22,10 +22,12 @@ public class ValidaCPF{
     }
 
     
-    public static String limpaCPF(String scpf){
-        String cpf;
+    public static String limpaCPF(String scpf){ //usar replaceall()//
+        String newcpf;
         //codigo pra limpar a String//
-        return cpf;
+        return newcpf;
     
     }
+
+    
 }

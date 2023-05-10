@@ -11,7 +11,7 @@ public class Pessoa{
     public float altura;
     
     //construtor para caso ideal com todas as infos passadas
-    public Pessoa(String nomelido,String sobrenomelido, GregorianCalendar datalida,String numcpflido, float pesolido, float alturalida){
+    public Pessoa(String nomelido,String sobrenomelido,String numcpflido, GregorianCalendar datalida, float pesolido, float alturalida){
         nome = nomelido;
         sobrenome = sobrenomelido;
         dataNasc = datalida;
@@ -30,7 +30,7 @@ public class Pessoa{
     public GregorianCalendar getdataNasc(){
         return dataNasc;
     }
-    public int getnumCPF(){
+    public String getnumCPF(){
         return numCPF;
     }
     
