@@ -4,12 +4,27 @@ import java.util.*;
 public class P1nX{
     public static String empty = "";
     public static String masc = "masculino"; public static String fem ="feminino";
+    
+    public static Boolean checkString(String arg){
+        Boolean ehnum = true;
+        for(int location = 0; location<arg.length();location++){
+            if((arg.charAt(location)) < '0' || (arg.charAt(location)) > '9'){
+                ehnum = false;
+            }
+        }
+        return ehnum;
+    }
+   
     public static void main(String[] args){
         //declaracao do buffered reader e da String line//
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in)); // declaracao do buffered reader//
         String line;
         int numCadastros;
+        
+        
+
         //criacao do primeiro elemento - COLOCAR EM UM METODO//
+            //critica das entradas//
             while(args[0].equals(empty)){       
                 System.out.println("primeiro elemento - nome - nao foi inserido, tente novamwente:");
                 args[0] = inData.readLine();
@@ -22,7 +37,7 @@ public class P1nX{
                 System.out.println("Terceiro elemento - CPF - inserido errado. tente novamente:");
                 args[2] = inData.readLine();
             }
-            while(args[3].length() != 7){
+            while(args[3].length() != 8){
                 System.out.println("DATA inserida de forma ERRADA. tente novamente adicionando na forma ddmmaaaa, sem espacos nem demais caracteres:");
                 args[3] = inData.readLine();
             }
@@ -30,16 +45,28 @@ public class P1nX{
                 System.out.println("Genero errado. tente novamente (masculino ou feminino):");
                 args[4] = inData.readLine();
             }
-            //adicionar condicao para a idade//
+            while(!checkString(args[5])){
+                System.out.println("IDADE inserida de forma errada. tente novamente inserido apenas caracteres numericos:");
+                args[5] = inData.readLine();
+            }
 
-
-            //se o elemento de args que contem o genero for tal, cria o objeto tal, senao, cria o outro//
+        //conversao da data de String para Gregorian Calendar//
+        int [] data1 = ValidaData.criadata1(args[3]);
+        GregorianCalendar data = new GregorianCalendar(data1[2],data1[1],data1[0]);
+            
+        //se o elemento de args que contem o genero for tal, cria o objeto tal, senao, cria o outro//
+        if(args[4].equals(masc)){
+            Homem men = new Homem(args[0],args[1],args[2],data,Float.parseFloat(args[6]),Float.parseFloat(args[7]),Integer.parseInt(args[5]));
+        }
+        else{
+            Mulher woman = new Mulher(args[0],args[1],args[2],data,Float.parseFloat(args[6]),Float.parseFloat(args[7]),Integer.parseInt(args[5]));
+        }
 
         //quantos cadastros?//
         System.out.println("Quantos usuarios a mais deseja cadastrar?");
         line = inData.readLine();
-        int numCadastros = Integer.parseInt(line);
-        while(!line.isdigit() || numCadastros<1){ // garantir que sera passado um numero inteiro, sem ./* //
+        numCadastros = Integer.parseInt(line);
+        while(!checkString(line)){ // garantir que sera passado um numero inteiro, sem ./* //
             line = inData.readLine();
         }
         if(numCadastros  == 0){
@@ -84,7 +111,7 @@ public class P1nX{
                 line = inData.readLine();
                 data_partes[2] = Integer.parseInt(line);
 
-                GregorianCalendar data = new GregorianCalendar(data_partes[2], data_partes[1], data_partes[0]);
+                data = new GregorianCalendar(data_partes[2], data_partes[1], data_partes[0]);
                 
             
             System.out.println("CPF:");
@@ -95,11 +122,11 @@ public class P1nX{
 
             System.out.println("Peso:");
             line = inData.readLine();
-            peso = Integer.parseFloat(line);
+            peso = Float.parseFloat(line);
             
             System.out.println("Altura:");
             line = inData.readLine();
-            altura = parseFloat(line);
+            altura = Float.parseFloat(line);
             
             System.out.println("Idade:");
             line = inData.readLine();
@@ -114,11 +141,11 @@ public class P1nX{
             }
         
             if(genero.equals(masc)){
-                Homem cidadao = new Homem(nome,sobrenome,data,cpf,peso,altura,idade); //falta data dps do sobrenome//
+                Homem cidadao = new Homem(nome,sobrenome,cpf,data,peso,altura,idade); //falta data dps do sobrenome//
                 
             }
             else{
-                Mulher cidadao = new Mulher(nome,sobrenome,data,cpf,peso,altura,idade); //falta data dps do sobrenome//
+                Mulher cidadao = new Mulher(nome,sobrenome,cpf,data,peso,altura,idade); //falta data dps do sobrenome//
                    
             }
 
