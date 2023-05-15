@@ -1,4 +1,4 @@
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class Pessoa{
     //declaracao de campos
@@ -6,7 +6,8 @@ public class Pessoa{
     private String sobrenome;
     private GregorianCalendar dataNasc; 
     private String numCPF;
-
+    private long intCPF;
+    
     public float peso;
     public float altura;
     
@@ -18,6 +19,7 @@ public class Pessoa{
         numCPF = numcpflido;
         peso = pesolido;
         altura = alturalida;
+        intCPF = ValidaCPF.toIntCPF(numcpflido); //definicao do cpf inteiro usando o metodo da classe ValidaCPF//
     }
     
     //metodos getter para informacoes sensiveis
@@ -33,10 +35,14 @@ public class Pessoa{
     public String getnumCPF(){
         return numCPF;
     }
-    
+    public long getintCPF(){
+        return intCPF;
+    }
+
     //metodo toString//
     public String toString(){
-        return "nome:"+ nome +"\nsobrenome:"+sobrenome+"\nnascimento:"+dataNasc+"\ncpf:"+ numCPF;
+        return "nome:"+ nome +" sobrenome:"+sobrenome+" nascimento:"+dataNasc.get(Calendar.DATE) +"/"+
+        dataNasc.get(Calendar.MONTH)+"/"+dataNasc.get(Calendar.YEAR)+" cpf:"+ numCPF;
     }
     
     }
