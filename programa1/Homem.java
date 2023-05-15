@@ -9,6 +9,6 @@ public class Homem extends Pessoa{
     }
 
     public String toString(){
-        return super.toString() + " Idade:"+idade;
+        return super.toString() + "|| Idade:"+idade;
     }
 }

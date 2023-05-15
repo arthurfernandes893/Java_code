@@ -41,8 +41,8 @@ public class Pessoa{
 
     //metodo toString//
     public String toString(){
-        return "nome:"+ nome +" sobrenome:"+sobrenome+" nascimento:"+dataNasc.get(Calendar.DATE) +"/"+
-        dataNasc.get(Calendar.MONTH)+"/"+dataNasc.get(Calendar.YEAR)+" cpf:"+ numCPF;
+        return "nome:"+ nome +"|| sobrenome:"+sobrenome+"|| nascimento:"+dataNasc.get(Calendar.DATE) +"/"+
+        dataNasc.get(Calendar.MONTH)+"/"+dataNasc.get(Calendar.YEAR)+"|| cpf:"+ numCPF;
     }
     
     }

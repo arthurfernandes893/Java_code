@@ -6,6 +6,7 @@ public class P1nX{
    
     
     public static Boolean checkString(String arg){ // metodo pra verificar strings como idade e cpf se estão apenas com caractefes numericos//
+        arg = arg.trim();
         Boolean ehnum = true;
         for(int location = 0; location<arg.length();location++){
             if((arg.charAt(location)) < '0' || (arg.charAt(location)) > '9'){
@@ -29,8 +30,8 @@ public class P1nX{
         //criacao do primeiro elemento 
         //0 = nome; 1 = sobrenome; 2 = cpf; 3 = nascimento; 4= genero; 5 = idade; 6 = peso; 7 = altura; --> o que fugir disso o programa pula pro loop de insercao e ignora o array args[]//
             //critica das entradas//
-            if(args[0].equals(empty) || args[1].equals(empty) || !ValidaCPF.isCPF(ValidaCPF.limpaCPF(args[2])) 
-            || args[3].length() != 8 || (!args[4].equals(masc) ^ !args[4].equals(fem)) || !checkString(args[5]))
+            if(args[0].equals(empty) || args[1].equals(empty) || ValidaCPF.isCPF(ValidaCPF.limpaCPF(args[2])) 
+            || args[3].length() != 8 || (!args[4].equals(masc) && !args[4].equals(fem)) || !checkString(args[5]))
             {       
                 System.out.println("informacoes incorretas");
             }
@@ -42,6 +43,7 @@ public class P1nX{
                 //se o elemento de args que contem o genero for tal, cria o objeto tal, senao, cria o outro//
                 if(args[4].equals(masc)){
                     Pessoa men = new Homem(args[0],args[1],args[2],data,Float.parseFloat(args[6]),Float.parseFloat(args[7]),Integer.parseInt(args[5]));
+
                 }
                 else{
                     Pessoa woman = new Mulher(args[0],args[1],args[2],data,Float.parseFloat(args[6]),Float.parseFloat(args[7]),Integer.parseInt(args[5]));
@@ -139,12 +141,11 @@ public class P1nX{
             System.out.println("Genero (masculino ou feminino):");
             line = inData.readLine();
             genero = line;
-            /*while(genero.equals(masc) == false ^ genero.equals(fem) == false){
-            System.out.println("Genero (masculino ou feminino):");
-            line = inData.readLine();
-            genero =line;
-            }*/
-        
+            while(genero.equals(masc) == false && genero.equals(fem) == false){ //enquanto nao for nenhum dos dois// 
+                System.out.println("Impossivel identificar Genero - insira novamente (masculino ou feminino):");
+                line = inData.readLine();
+                genero =line;
+            }
             if(genero.equals(masc)){
                 Pessoa cidadao = new Homem(nome,sobrenome,cpf,data,peso,altura,idade); 
                 pessoas[i] = cidadao; 
@@ -155,6 +156,7 @@ public class P1nX{
                 
             }
         }
+        
         //contagem do numero de homens e de mulheres e impressao dos cadastros//
         int numH = 0; int numM = 0; Homem h; Mulher m;
         for(Pessoa a : pessoas){
