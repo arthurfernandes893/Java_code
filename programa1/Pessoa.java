@@ -21,7 +21,13 @@ public class Pessoa{
         altura = alturalida;
         intCPF = ValidaCPF.toIntCPF(numcpflido); //definicao do cpf inteiro usando o metodo da classe ValidaCPF//
     }
-    
+    public Pessoa(String nomelido,String sobrenomelido,String numcpflido, GregorianCalendar datalida){
+        nome = nomelido;
+        sobrenome = sobrenomelido;
+        dataNasc = datalida;
+        numCPF = numcpflido;
+        intCPF = ValidaCPF.toIntCPF(numcpflido); //definicao do cpf inteiro usando o metodo da classe ValidaCPF//
+    }
     //metodos getter para informacoes sensiveis
     public String getnome(){
         return nome;
@@ -41,8 +47,8 @@ public class Pessoa{
 
     //metodo toString//
     public String toString(){
-        return "nome:"+ nome +"|| sobrenome:"+sobrenome+"|| nascimento:"+dataNasc.get(Calendar.DATE) +"/"+
-        dataNasc.get(Calendar.MONTH)+"/"+dataNasc.get(Calendar.YEAR)+"|| cpf:"+ numCPF;
+        return "nome:"+ nome +" || sobrenome:"+sobrenome+" || nascimento:"+dataNasc.get(Calendar.DATE) +"/"+
+        dataNasc.get(Calendar.MONTH)+"/"+dataNasc.get(Calendar.YEAR)+" || cpf:"+ numCPF;
     }
     
     }
