@@ -33,7 +33,7 @@ public class Ex1n{
             }
 
             line = inData.readLine();// Lê a próxima linha
-            if(line.equals(aux)){ // se a string line for igual a string aux - uma string vazia, que eh o q ocorre quando se esvazia um buffer vazio - break//
+            if(line.equals(aux)){
                 break;
             }
         }
