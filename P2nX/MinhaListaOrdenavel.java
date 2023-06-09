@@ -29,4 +29,14 @@ public class MinhaListaOrdenavel {
     }
 
     //ordenacao//
+ /*TEMPLATE
+ public Comparator pesoC = new Comparator () {
+ public int compare (Object p1, Object p2){ // recebe objetos PessoaIMC como Object
+ double pf1, pf2;
+ pf2 = (PessoaIMC) p2.getPeso();
+ pf1 = (PessoaIMC) p1.getPeso();
+ return (int)Math.round (pf2 – pf1);
+ }
+};
+ */
 }
