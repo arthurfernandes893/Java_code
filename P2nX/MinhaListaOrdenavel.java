@@ -6,6 +6,7 @@ public class MinhaListaOrdenavel {
     public MinhaListaOrdenavel(){}
 
     //metod add e get necessarios por conta do polimorfismo//
+
     public void add(Homem p){
         PessoaIMC m = (PessoaIMC) p;
         pessoas.add(m);
@@ -15,18 +16,21 @@ public class MinhaListaOrdenavel {
         pessoas.add(m);
     }
 
-    public Homem getHomem(int i){
-        if(pessoas.get(i) instanceof Homem){
-            Homem m = (Homem) pessoas.get(i);
-            return m;
-        }   
-    }
-    public Mulher GetMulher(int i){
-        if(pessoas.get(i) instanceof Mulher){
-            Mulher m = (Mulher) pessoas.get(i);
-            return m;
+    //METODO PRA VER SE É + METODOS PRA FAZER O POLIMORFISMO//
+    //GET COM INDEX//
+    public void get(int index){
+        Homem men;
+        Mulher wm;        
+        if(pessoas.get(index) instanceof Homem){
+            men = (Homem) pessoas.get(index);
+            System.out.println(men);
+        }
+        else{
+            wm = (Mulher) pessoas.get(index);
+            System.out.println(wm);
         }
     }
+    
 
     //ordenacao//
  /*TEMPLATE

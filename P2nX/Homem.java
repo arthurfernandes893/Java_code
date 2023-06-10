@@ -15,7 +15,7 @@ public class Homem extends PessoaIMC{
                 return "\nPeso Ideal";
             }
             else{
-                return "Acima do peso Ideal";
+                return "\nAcima do peso Ideal";
             }
         }
     }
