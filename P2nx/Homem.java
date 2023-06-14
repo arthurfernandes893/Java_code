@@ -8,18 +8,18 @@ public class Homem extends PessoaIMC{
 
     public String resultIMC(){
         if(calculaIMC()<20.7){
-            return "\nAbaixo do peso ideal";
+            return " || Abaixo do peso ideal ";
         }
         else{
             if(calculaIMC()>=20.7 && calculaIMC()<=26.4){
-                return "\nPeso Ideal";
+                return " || Peso Ideal ";
             }
             else{
-                return "\nAcima do peso Ideal";
+                return " || Acima do peso Ideal ";
             }
         }
     }
     public String toString(){
-        return super.toString()+resultIMC() +"\ngenero: masculino";
+        return super.toString()+resultIMC() +"|| genero: masculino";
     }
 }

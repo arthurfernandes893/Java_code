@@ -1,77 +1,27 @@
-1. excluir cpf, peso e altura
-----------------------------------------
-In Java 8 and later versions, the `Comparator` interface was enhanced with the introduction of functional interfaces and lambda expressions. This enhancement allows you to create a `Comparator` without explicitly implementing the interface using the traditional class-based approach. Instead, you can use lambda expressions or method references to define the comparison logic inline, making the code more concise and expressive.
+arraylist implementa colletion e vamos usar SORT DA CLASSE COLLECTIONS
 
-Lambda expressions are anonymous functions that can be used to provide a concise implementation of a functional interface, which is an interface with a single abstract method (SAM). Since the `Comparator` interface has only one abstract method (`compare()`), it is a functional interface.
-
-Here's an example that demonstrates how to use a lambda expression to create a `Comparator`:
-
-```java
-List<Person> people = new ArrayList<>();
-people.add(new Person("Alice", 25));
-people.add(new Person("Bob", 30));
-people.add(new Person("Charlie", 20));
-
-// Sort the list based on age using a lambda expression
-Collections.sort(people, (p1, p2) -> p1.getAge() - p2.getAge());
-
-// Print the sorted list
-for (Person person : people) {
-    System.out.println(person);
+um metodo pra abrigar cada sort, disparado por uma constante
+{
+    Collections.sort
 }
-```
 
-In the above example, the lambda expression `(p1, p2) -> p1.getAge() - p2.getAge()` is used to define the comparison logic inline. It takes two `Person` objects (`p1` and `p2`) and subtracts their ages to determine the comparison result. This lambda expression is equivalent to creating a separate class that implements the `Comparator<Person>` interface and overrides the `compare()` method.
+backup:
 
-Method references are another way to create a `Comparator` in a concise manner. They allow you to refer to an existing method and use it as the implementation for the `compare()` method. Here's an example using a method reference:
-
-```java
-List<Person> people = new ArrayList<>();
-people.add(new Person("Alice", 25));
-people.add(new Person("Bob", 30));
-people.add(new Person("Charlie", 20));
-
-// Sort the list based on age using a method reference
-Collections.sort(people, Comparator.comparingInt(Person::getAge));
-
-// Print the sorted list
-for (Person person : people) {
-    System.out.println(person);
-}
-```
-
-In this example, the `Comparator.comparingInt()` method is used along with the method reference `Person::getAge`. The `comparingInt()` method creates a `Comparator` that compares `Person` objects based on their ages by extracting the age values using the `getAge()` method.
-
-Using lambda expressions or method references to create comparators simplifies the code by avoiding the need to create separate comparator classes. It promotes a more functional programming style and improves the readability of the code by keeping the comparison logic close to where it is used.
-----------------------------------
-Yes, complex comparison logics can be implemented using lambda expressions or method references in the more concise approach of creating comparators in Java. The flexibility and power of lambda expressions allow you to define sophisticated and custom comparison logic inline without the need for creating separate classes or implementing interfaces explicitly.
-
-Lambda expressions can include multiple statements and complex expressions, making them suitable for implementing complex comparison logics. You can combine conditions, perform calculations, access multiple properties of objects, and apply any custom logic within the lambda expression to determine the comparison result.
-
-Here's an example that demonstrates a more complex comparison logic using a lambda expression:
-
-```java
-List<Person> people = new ArrayList<>();
-people.add(new Person("Alice", 25));
-people.add(new Person("Bob", 30));
-people.add(new Person("Charlie", 20));
-
-// Sort the list based on a complex comparison logic using a lambda expression
-Collections.sort(people, (p1, p2) -> {
-    if (p1.getAge() == p2.getAge()) {
-        return p1.getName().compareTo(p2.getName());
-    } else {
-        return p2.getAge() - p1.getAge();
+public void sortname(){
+        Collections.sort(pessoas, Comparator.comparing(PessoaIMC::getnome));
     }
-});
-
-// Print the sorted list
-for (Person person : people) {
-    System.out.println(person);
-}
-```
-
-In this example, the lambda expression contains an `if-else` statement to handle a complex comparison logic. If two `Person` objects have the same age, it compares their names using the `compareTo()` method. Otherwise, it compares their ages in descending order.
-
-By using lambda expressions or method references, you have the flexibility to incorporate complex conditions, calculations, or any other custom logic required for your comparison requirements. This approach eliminates the need for creating separate classes or implementing interfaces, resulting in more concise and expressive code.
-
+    public void sortnamereversed(){
+        Collections.sort(pessoas, Comparator.comparing(PessoaIMC::getnome).reversed());
+    }
+    public void SortPeso(){
+        Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getPeso));
+    }
+    public void SortPesoreversed(){
+        Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getPeso).reversed());
+    }
+    public void SortAltura(){
+        Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getAltura));
+    }
+    public void SortIMC(){
+        Collections.sort(pessoas,Comparator.comparing(PessoaIMC::resultIMC));
+    }
