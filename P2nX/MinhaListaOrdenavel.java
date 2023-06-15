@@ -1,14 +1,12 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.*;
 
-public class MinhaListaOrdenavel {
+public class MinhaListaOrdenavel{
     //criar arraylist de pessoaimc pois eh a superclasse comum aos dois//
     ArrayList<PessoaIMC> pessoas = new ArrayList<>();
     public MinhaListaOrdenavel(){}
 
     //metod add e get necessarios por conta do polimorfismo//
-
     public void add(PessoaIMC p){
         pessoas.add(p);
     }
@@ -16,101 +14,84 @@ public class MinhaListaOrdenavel {
     public PessoaIMC get(int index){
         return pessoas.get(index);
     }
-    public PessoaIMC criapessoa() throws IOException,NumberFormatException{
-        //criar buffer fora do try/catch //
-        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
-        // definir parametros de checagem e exceções jogadas//
-        String nome = ""; String sobrenome; String line;
-        int[] data_partes = new int[3];
-        float peso, altura;  
-        String genero;
 
-          
-        System.out.println("Se desejar encerrar a execução, pressione enter\nInsira o nome:");
-        line = inData.readLine();
-        /*     if(line.equals(empty)){ //se nao desejar mais inserir, basta encerrar no proximo loop//
-                System.out.println("nao deseja incluir mais usuarios. programa encerrado");
-                
+    //definicao dos sorts usando lambda expressions, por isso o metodo comparing//
+    public void compara(int chave){
+        switch (chave) {
+            case 1:
+                Collections.sort(pessoas, Comparator.comparing(PessoaIMC::getnome));        
+                //return pessoas;
+                break;
+            case 2:
+                Collections.sort(pessoas, Comparator.comparing(PessoaIMC::getnome).reversed());
+                //return pessoas;
+                break;
+            
+            case 3:
+                Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getPeso));        
+                //return pessoas;
+                break;
+            case 4:
+                Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getPeso).reversed());
+                //return pessoas;
+                break;
+            case 5:
+                Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getAltura));        
+                //return pessoas;
+                break;
+            case 6:
+                Collections.sort(pessoas,generoc);
+                //return pessoas;
+                break;   
+            case 7:
+                Collections.sort(pessoas,Comparator.comparing(PessoaIMC::resultIMC));
+                break;
+            default:
+                //return pessoas;
+                break;
+        }
+    }
+
+    /*sort de genero definido usando um comparator a parte  
+    e sobrescrevendo o metodo compare de generoc 
+    para operar com os generos*/
+    public Comparator generoc = new Comparator() {
+        public int compare(Object a, Object b){
+            //comparar baseado no instaceof e retornar -1,0,1//
+            if(((a instanceof Homem) && (b instanceof Homem)) || 
+               ((a instanceof Mulher) && (b instanceof Mulher))){ //sao iguais//
+                return 0;
             }
             else{
-            nome = line;
+                if((a instanceof Homem) && (b instanceof Mulher)){ 
+                    return 1;
+                }
+                else{ 
+                    return -1;
+                }
             }
-*/
-        System.out.println("Insira o Sobrenome");
-        line = inData.readLine();
-        sobrenome = line;
+        }
+    };
 
-        System.out.println("Insira a data de nascimento:");
-        System.out.println("Dia:");
-        line = inData.readLine();
-            while (!ValidaData.isDay(Integer.parseInt(line))){ // garantir consistencia//
-                System.out.println("Dia inserido de forma errada, insira um numero entre 1 e 31:");
-                line = inData.readLine();
-            }
-            data_partes[0] = Integer.parseInt(line);
-                
-            System.out.println("Mes:");
-            line = inData.readLine();
-            while (!ValidaData.isMonth(Integer.parseInt(line))){
-                System.out.println("Mes inserido de forma errada, insira um numero entre 1 e 12:");
-                line = inData.readLine();
-            }
-            data_partes[1] = Integer.parseInt(line);
-                
-            System.out.println("Ano:");
-            line = inData.readLine();
-            while (!ValidaData.isYear(Integer.parseInt(line))){
-                System.out.println("Ano inserido de forma errada, insira um numero entre 1920 e 2023:");
-                line = inData.readLine();
-            }
-            data_partes[2] = Integer.parseInt(line);
-            data = new GregorianCalendar(data_partes[2], data_partes[1], data_partes[0]);
-                
-           
-            System.out.println("Peso (em Kg):");
-            line = inData.readLine();
-            /*if(line.equals(empty)){
-                peso =0;
-            }
-            else{ peso = Float.parseFloat(line);}
-            */
-            System.out.println("Altura (em metros):");
-            line = inData.readLine();
-            /*if(line.equals(empty)){
-                altura =0;
-            }
-            else{altura = Float.parseFloat(line);}
-            */
-            }
-            
-    }
-    
-    
-
-    //ordenacao//
- /*TEMPLATE
- public Comparator pesoC = new Comparator () {
- public int compare (Object p1, Object p2){ // recebe objetos PessoaIMC como Object
- double pf1, pf2;
- pf2 = (PessoaIMC) p2.getPeso();
- pf1 = (PessoaIMC) p1.getPeso();
- return (int)Math.round (pf2 – pf1);
- }
-};
- */
-
-/*
- public ArrayList ordena (int critério) {
-...switch (critério) {
- case PESO: 
- Collections.sort(this.[ArrayList encapsulado] , pesoC); 
- // passamos o próprio ArrayList encapusado dentro de MinhaListaOrdenavel
- // e o Comparator correspondente ao critério
- case PESO_REVERSO: 
- Collections.sort(this.[ArrayList encapsulado] , pesoC.reversed());
- // observe que a única diferença é a chamada a reversed()
-...
- return this.[ArrayList encapsulado];
-}
-*/
-}
+    //metodo pra criar o preset//
+    public void cirapreset(int i){
+        String[] nomes = {"ana","claudio","maria","tereza","fernando","jose","antonio","alex","claudio","tereza"};
+        String[] sobrenomes = {"fernandes","menezes","cruz","cardoso","luiz","cruz","batista","teixeira","jose","lucia"};
+        int[] ano ={1995,2005,2003,1994,2007,1989,1984,2000,2004,2001};
+        int[] mes ={1,2,3,4,5,6,7,8,9,10};
+        int[] dia ={1,2,3,4,5,6,7,8,9,10};
+        double[] peso = {67.6,55.6,49.8,78.6,88.6,56.4,77.5,65.9,90.3,100.35};
+        double[] altura = {1.56,1.71,1.89,1.90,1.56,1.78,2.01,1.74,1.57,1.90};
+        int[] genero = {1,2,1,1,2,2,2,2,2,1}; //1-feminino,2-masculino//
+        if(i ==1){
+            GregorianCalendar data = new GregorianCalendar(ano[i],mes[i], dia[i]);
+            PessoaIMC wm = new Mulher(nomes[i], sobrenomes[i],data, peso[i], altura[i]);
+            add(wm);
+        }
+        else{
+            GregorianCalendar data = new GregorianCalendar(ano[i],mes[i], dia[i]);
+            PessoaIMC wm = new Homem(nomes[i], sobrenomes[i],data, peso[i], altura[i]);
+            add(wm);
+        }
+    } 
+}   

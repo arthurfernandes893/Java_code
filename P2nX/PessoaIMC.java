@@ -1,10 +1,10 @@
 import java.util.GregorianCalendar;
 
-public class PessoaIMC extends Pessoa{
-    private float peso;
-    private float altura;
+public abstract class PessoaIMC extends Pessoa{
+    private double peso;
+    private double altura;
 
-    public PessoaIMC(String nomelido,String sobrenomelido, GregorianCalendar datalida,float peso, float altura){
+    public PessoaIMC(String nomelido,String sobrenomelido, GregorianCalendar datalida,double peso, double altura){
            super(nomelido, sobrenomelido, datalida);
            this.peso = peso;
            this.altura = altura;
@@ -15,7 +15,7 @@ public class PessoaIMC extends Pessoa{
     }
 
     //metodo abstrato//
-    public String resultIMC();
+    public abstract String resultIMC();
 
     //metodos getter//
     public double getPeso(){
@@ -26,6 +26,6 @@ public class PessoaIMC extends Pessoa{
     }
 
     public String toString(){
-        return super.toString() + "\npeso: "+peso + "\naltura: "+altura;
+        return super.toString() + " || peso: "+peso + " || altura: "+altura;
     }
 }
