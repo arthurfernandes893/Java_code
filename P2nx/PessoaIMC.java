@@ -1,10 +1,10 @@
 import java.util.GregorianCalendar;
 
 public abstract class PessoaIMC extends Pessoa{
-    private float peso;
-    private float altura;
+    private double peso;
+    private double altura;
 
-    public PessoaIMC(String nomelido,String sobrenomelido, GregorianCalendar datalida,float peso, float altura){
+    public PessoaIMC(String nomelido,String sobrenomelido, GregorianCalendar datalida,double peso, double altura){
            super(nomelido, sobrenomelido, datalida);
            this.peso = peso;
            this.altura = altura;

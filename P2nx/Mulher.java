@@ -1,7 +1,7 @@
 import java.util.GregorianCalendar;
 
 public class Mulher extends PessoaIMC{
-    public Mulher(String nomelido,String sobrenomelido, GregorianCalendar datalida,float peso, float altura){
+    public Mulher(String nomelido,String sobrenomelido, GregorianCalendar datalida,double peso, double altura){
         super(nomelido, sobrenomelido, datalida,peso,altura);
     }
 

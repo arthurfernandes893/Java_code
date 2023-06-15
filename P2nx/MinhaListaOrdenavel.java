@@ -7,7 +7,6 @@ public class MinhaListaOrdenavel{
     public MinhaListaOrdenavel(){}
 
     //metod add e get necessarios por conta do polimorfismo//
-
     public void add(PessoaIMC p){
         pessoas.add(p);
     }
@@ -15,41 +14,40 @@ public class MinhaListaOrdenavel{
     public PessoaIMC get(int index){
         return pessoas.get(index);
     }
-    //metodo que cria a pessoa//
- 
+
     //definicao dos sorts usando lambda expressions, por isso o metodo comparing//
-    public ArrayList<PessoaIMC> compara(int chave){
+    public void compara(int chave){
         switch (chave) {
             case 1:
                 Collections.sort(pessoas, Comparator.comparing(PessoaIMC::getnome));        
-                return pessoas;
+                //return pessoas;
                 break;
             case 2:
                 Collections.sort(pessoas, Comparator.comparing(PessoaIMC::getnome).reversed());
-                return pessoas;
+                //return pessoas;
                 break;
             
             case 3:
                 Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getPeso));        
-                return pessoas;
+                //return pessoas;
                 break;
             case 4:
                 Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getPeso).reversed());
-                return pessoas;
+                //return pessoas;
                 break;
             case 5:
                 Collections.sort(pessoas,Comparator.comparing(PessoaIMC::getAltura));        
-                return pessoas;
+                //return pessoas;
                 break;
             case 6:
                 Collections.sort(pessoas,generoc);
-                return pessoas;
+                //return pessoas;
                 break;   
             case 7:
                 Collections.sort(pessoas,Comparator.comparing(PessoaIMC::resultIMC));
                 break;
             default:
-                return pessoas;
+                //return pessoas;
                 break;
         }
     }
@@ -75,5 +73,25 @@ public class MinhaListaOrdenavel{
         }
     };
 
-}
-    
+    //metodo pra criar o preset//
+    public void cirapreset(int i){
+        String[] nomes = {"ana","claudio","maria","tereza","fernando","jose","antonio","alex","claudio","tereza"};
+        String[] sobrenomes = {"fernandes","menezes","cruz","cardoso","luiz","cruz","batista","teixeira","jose","lucia"};
+        int[] ano ={1995,2005,2003,1994,2007,1989,1984,2000,2004,2001};
+        int[] mes ={1,2,3,4,5,6,7,8,9,10};
+        int[] dia ={1,2,3,4,5,6,7,8,9,10};
+        double[] peso = {67.6,55.6,49.8,78.6,88.6,56.4,77.5,65.9,90.3,100.35};
+        double[] altura = {1.56,1.71,1.89,1.90,1.56,1.78,2.01,1.74,1.57,1.90};
+        int[] genero = {1,2,1,1,2,2,2,2,2,1}; //1-feminino,2-masculino//
+        if(i ==1){
+            GregorianCalendar data = new GregorianCalendar(ano[i],mes[i], dia[i]);
+            PessoaIMC wm = new Mulher(nomes[i], sobrenomes[i],data, peso[i], altura[i]);
+            add(wm);
+        }
+        else{
+            GregorianCalendar data = new GregorianCalendar(ano[i],mes[i], dia[i]);
+            PessoaIMC wm = new Homem(nomes[i], sobrenomes[i],data, peso[i], altura[i]);
+            add(wm);
+        }
+    } 
+}   

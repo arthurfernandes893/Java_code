@@ -29,7 +29,7 @@ public class P2nX{
         }
     }
 
-    public static void imprime(MinhaListaOrdenavel array) throws IOException{
+    public static void menu(MinhaListaOrdenavel array) throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String line;
         int chave;
@@ -54,7 +54,9 @@ public class P2nX{
     public static void main(String[] args) throws IOException{
         //criacao do arraylist//
         MinhaListaOrdenavel array = new MinhaListaOrdenavel();
-        
+        for(int i = 0;i<10;i++){
+            array.cirapreset(i);
+        }
 
         //menu
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
@@ -72,7 +74,7 @@ public class P2nX{
 
         if(chave == 2){System.exit(1);} //se 2, encerra o programa, senao, apresenta opcoes//
         else{
-            imprime(array);
+            menu(array);
         }
     }
 }
