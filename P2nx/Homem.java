@@ -20,6 +20,6 @@ public class Homem extends PessoaIMC{
         }
     }
     public String toString(){
-        return super.toString()+resultIMC() +"|| genero: masculino";
+        return super.toString()+" || IMC: "+calculaIMC()+ resultIMC() +"|| genero: masculino";
     }
 }

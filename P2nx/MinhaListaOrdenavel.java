@@ -83,7 +83,7 @@ public class MinhaListaOrdenavel{
         double[] peso = {67.6,55.6,49.8,78.6,88.6,56.4,77.5,65.9,90.3,100.35};
         double[] altura = {1.56,1.71,1.89,1.90,1.56,1.78,2.01,1.74,1.57,1.90};
         int[] genero = {1,2,1,1,2,2,2,2,2,1}; //1-feminino,2-masculino//
-        if(i ==1){
+        if(genero[i]==1){
             GregorianCalendar data = new GregorianCalendar(ano[i],mes[i], dia[i]);
             PessoaIMC wm = new Mulher(nomes[i], sobrenomes[i],data, peso[i], altura[i]);
             add(wm);

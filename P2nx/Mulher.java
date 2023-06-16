@@ -19,6 +19,6 @@ public class Mulher extends PessoaIMC{
         }
     }
     public String toString(){
-        return super.toString()+resultIMC() + "|| genero: feminino";
+        return super.toString()+" || IMC: "+calculaIMC()+ resultIMC() + "|| genero: feminino";
     }
 }
