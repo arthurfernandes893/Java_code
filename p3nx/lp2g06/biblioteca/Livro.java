@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import P3nX.lp2g06.biblioteca.EmprestPara;
+import p3nX.lp2g06.biblioteca.EmprestPara;
 
 public class Livro {
-    public String codigoLivro;
-    public String titulo;
-    public String categoria;
-    public int quant;
-    public int emprestados;
+    private String codigoLivro;
+    private String titulo;
+    private String categoria;
+    private int quant;
+    private int emprestados;
     private ArrayList<EmprestPara> Hist = new ArrayList<EmprestPara>(); 
     
     //no momento do emprestimo, emprestados eh zero e quant eh definido//
@@ -37,9 +37,12 @@ public class Livro {
         }
     }
 
-    public void addUsuarioHist(int codigoUsuario, GregorianCalendar dataEmprest,GregorianCalendar dataDevolv){
+    public void addUsuarioHist(String codigoUsuario, GregorianCalendar dataEmprest,GregorianCalendar dataDevolv){
         EmprestPara emprestado = new EmprestPara(codigoUsuario,dataEmprest,dataDevolv);
         Hist.add(emprestado);
     }
 
+    public String gettitulo(){
+        return titulo;
+    }
 }
