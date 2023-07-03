@@ -1,7 +1,7 @@
 
 public class P3nX {
     //relatorio//
-    //emprestimo//
+    //emprestimo// //try{emprestar e getlivro get usuario}catch exceptions{perguntar conitnuar ou desistir}
     //manutencao//
     //cadastro//
     
