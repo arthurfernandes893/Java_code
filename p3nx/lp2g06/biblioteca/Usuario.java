@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Usuario extends Pessoa{
     private String endereco;
     private String codigoUsuario;
-    public ArrayList<Emprest> Hist;
+    private ArrayList<Emprest> Hist;
     
     public Usuario(String nomelido,String sobrenomelido, GregorianCalendar datalida,String endereco, String codigo){
            super(nomelido, sobrenomelido, datalida);
@@ -24,5 +25,7 @@ public class Usuario extends Pessoa{
         Emprest emprestimo = new Emprest(dataLoc,codigoLivro);
         Hist.add(emprestimo);
     }
+
+    public ArrayList<Emprest> gethist(){return Hist;}
 
 }

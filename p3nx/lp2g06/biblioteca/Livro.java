@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import p3nX.lp2g06.biblioteca.EmprestPara;
 
-public class Livro {
+public class Livro implements Serializable{
     private String codigoLivro;
     private String titulo;
     private String categoria;
@@ -44,5 +45,11 @@ public class Livro {
 
     public String gettitulo(){
         return titulo;
+    }
+    public ArrayList<EmprestPara> gethist(){
+        return Hist;
+    }
+    public String getcodlivro(){
+        return codigoLivro;
     }
 }

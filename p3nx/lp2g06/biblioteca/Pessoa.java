@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.*;
-public class Pessoa{
+public class Pessoa implements Serializable{
     //declaracao de campos
     private String nome;
     private String sobrenome;

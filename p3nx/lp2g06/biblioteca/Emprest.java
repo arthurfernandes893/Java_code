@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Emprest {
+public class Emprest implements Serializable{
     GregorianCalendar dataEmprest;
     GregorianCalendar dataDevolv;
     String codigoLivro;
