@@ -1,4 +1,4 @@
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -28,4 +28,73 @@ public class Usuario extends Pessoa{
 
     public ArrayList<Emprest> gethist(){return Hist;}
 
+    public static Usuario criauser() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String nome = aux;
+
+            try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String sobrenome = aux;
+            
+            try{
+                aux = inData.readLine();
+                if(aux.equals("") || !(ValidaData.checkString(aux))){
+                    throw new DataErradaException(aux.length(),false);
+                }
+            }
+            catch(DataErradaException ex){
+                System.out.println(ex);
+                GregorianCalendar data = ex.criadatacerta(aux);
+            }
+            GregorianCalendar data = ValidaData.criadata1(aux);
+
+            try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String endereco = aux;
+            
+            try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String codigo = aux;
+            
+            return new Usuario(nome, sobrenome, data, endereco, codigo);
+    }
 }

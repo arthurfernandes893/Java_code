@@ -3,11 +3,15 @@ import java.util.*;
 public class Biblioteca {
     Hashtable<String,Usuario> usuarios_tb;
     Hashtable<String,Livro> livros_tb;
+    private String user_tb_file;
+    private String book_tb_file;
 
     //CONSTRUTORES//
     public Biblioteca(){
         this.usuarios_tb = new Hashtable<String,Usuario>(100);
         this.livros_tb = new Hashtable<String,Livro>(200);
+        this.user_tb_file = "firstversion_users_tb.dat";
+        this.book_tb_file = "firstversion_books_tb.dat";
     }
     public Biblioteca(String nome1, String nome2) throws ClassNotFoundException,IOException,FileNotFoundException{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(nome1));
@@ -21,6 +25,8 @@ public class Biblioteca {
         in.close();
         inb.close();
         
+        this.user_tb_file = "firstversion_users_tb.dat";
+        this.book_tb_file = "firstversion_books_tb.dat";
     }
 
  
@@ -48,21 +54,35 @@ public class Biblioteca {
         //adicionar try catch no metodo de cima//
     }
 
+
+    
+    /*
     public void leArquivo(String file_name) throws ClassNotFoundException,IOException,FileNotFoundException{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file_name)); 
         Object aux = in.readObject();
-        if(aux instanceof Hashtable<String,Usuario>){
-            this.usuarios_tb =  (Hashtable<String,Usuario>) aux;
-        }
-        else{
-            this.livros_tb =  (Hashtable<String,Livro>) aux;
-        }
-       
+        if (aux instanceof Hashtable) { //uso do tipo nao conhecido para ver se eh hashtable
+             Hashtable hashtable = (Hashtable) aux; //polimorfismo para enxergar como hashtable de "algum tipo"
+            if (hashtable instanceof Hashtable<String, Usuario>) { //uso do metodo containsvalue para ver se ha objetos do tipo Usuario
+                this.usuarios_tb = (Hashtable) hashtable;
+            } else if (hashtable.containsValue(Livro.class)) {
+                this.livros_tb = (Hashtable>) hashtable;
+           }  
+       }
     }
 
-    public void emprestaLivro(Usuario user,Livro book){
-        book.empresta();
-        user.addLivroHist(new GregorianCalendar(), book.codigoLivro);
+    */
+
+
+
+    public void emprestaLivro(Usuario user,Livro book) throws CopiaNaoDisponivelEx{
+       
+        try{book.empresta();}
+        catch(CopiaNaoDisponivelEx ex){
+           // BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println(ex);
+           
+        }
+        user.addLivroHist(new GregorianCalendar(), book.getcodlivro());
     }
     
     public void devolveLivro(Usuario user, Livro book) { //throws DevolucaoAtrasadaEx//
@@ -122,12 +142,39 @@ public class Biblioteca {
         return u;
     }
 
-    public Livro getbook(String cod)throws LivroNaocadastradoEx{
+    public Livro getbook(String cod)throws LivroNaoCadastradoEx{
         Livro b;
         try{b = (Livro) livros_tb.get(cod);}
         catch(NullPointerException ex){
-            throw new LivroNaocadastradoEx(cod);
+            throw new LivroNaoCadastradoEx(cod);
         }
         return b;
+    }
+    public String getbookfilename(){
+        return book_tb_file;
+    }
+    public String getuserfilename(){
+        return user_tb_file;
+    }
+    public void setuserfilename() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        System.out.println("Entre com o novo nome do arquivo:");
+        while(aux.equals("")){
+            System.out.println("Entre com o novo nome do arquivo:");
+            aux = inData.readLine();
+        }
+        user_tb_file = aux;
+    }
+
+    public void setbooksfilename() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        System.out.println("Entre com o novo nome do arquivo:");
+        while(aux.equals("")){
+            System.out.println("Entre com o novo nome do arquivo:");
+            aux = inData.readLine();
+        }
+        book_tb_file = aux;
     }
 }

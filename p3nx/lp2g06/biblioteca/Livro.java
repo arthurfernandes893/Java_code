@@ -1,8 +1,8 @@
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import p3nX.lp2g06.biblioteca.EmprestPara;
+//import p3nX.lp2g06.biblioteca.EmprestPara;
 
 public class Livro implements Serializable{
     private String codigoLivro;
@@ -10,7 +10,7 @@ public class Livro implements Serializable{
     private String categoria;
     private int quant;
     private int emprestados;
-    private ArrayList<EmprestPara> Hist = new ArrayList<EmprestPara>(); 
+    private ArrayList<EmprestPara> Hist; 
     
     //no momento do emprestimo, emprestados eh zero e quant eh definido//
     public Livro(String codigoLivro, String titulo, String categoria, int quant){
@@ -19,22 +19,25 @@ public class Livro implements Serializable{
         this.categoria = categoria;
         this.quant = quant;
         this.emprestados = 0;
+        this.Hist = new ArrayList<EmprestPara>();
     }
 
     public void empresta()throws CopiaNaoDisponivelEx{
-        if(emprestados == quant){
-            throw new CopiaNaoDisponivelEx();
+        if(quant ==0){
+            throw new CopiaNaoDisponivelEx(emprestados,quant);
         }
         else{
             emprestados+=1;
+            quant-=1;
         }
     }
     public void devolve()throws  NenhumaCopiaEmprestadaEx{
-        if(emprestados == quant){
-            throw new  NenhumaCopiaEmprestadaEx();
+        if(emprestados == 0){
+            throw new  NenhumaCopiaEmprestadaEx(emprestados,quant);
         }
         else{
             quant+=1;
+            emprestados-=1;
         }
     }
 
@@ -51,5 +54,62 @@ public class Livro implements Serializable{
     }
     public String getcodlivro(){
         return codigoLivro;
+    }
+
+    public static Livro crialivro() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                String titulo = aux;
+
+                try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                String categoria = aux;
+
+                try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                String codigo = aux;
+
+                try{
+                aux = inData.readLine();
+                if(aux.equals("") || !((aux.trim()).matches("\\d+"))){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                int quant = Integer.parseInt(aux);
+            return new Livro(codigo, titulo, categoria, quant);
     }
 }
