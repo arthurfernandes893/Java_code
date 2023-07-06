@@ -20,12 +20,12 @@ public class P3nX {
             }
         
         if(opcao.equals("1")){
-            lib.cadastraUsuario(Usuario.criauser());
+            lib.cadastraUsuario(Biblioteca.criauser());
         }
 
         else{
             if(opcao.equals("2")){
-                lib.cadastraLivro(Livro.crialivro());
+                lib.cadastraLivro(Biblioteca.crialivro());
             }
             else{
                 if(opcao.equals("3")){
@@ -67,7 +67,7 @@ public class P3nX {
         }
 
     }
-    public void menu(){
+    public void menu(){ //usar principio do 2 com while saida 0 e somar 1 pra sair do bloco.
 
     }
     public static void main(String[] args){

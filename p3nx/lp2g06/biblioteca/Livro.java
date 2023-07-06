@@ -56,60 +56,7 @@ public class Livro implements Serializable{
         return codigoLivro;
     }
 
-    public static Livro crialivro() throws IOException{
-        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
-        String aux = "";
-        try{
-                aux = inData.readLine();
-                if(aux.equals("")){
-                    throw new LivroCadastroEx(aux);
-                }
-                }
-                catch(LivroCadastroEx ex){
-                    System.out.println(ex);
-                    ex.ledireito(aux);
-
-                }
-                String titulo = aux;
-
-                try{
-                aux = inData.readLine();
-                if(aux.equals("")){
-                    throw new LivroCadastroEx(aux);
-                }
-                }
-                catch(LivroCadastroEx ex){
-                    System.out.println(ex);
-                    ex.ledireito(aux);
-
-                }
-                String categoria = aux;
-
-                try{
-                aux = inData.readLine();
-                if(aux.equals("")){
-                    throw new LivroCadastroEx(aux);
-                }
-                }
-                catch(LivroCadastroEx ex){
-                    System.out.println(ex);
-                    ex.ledireito(aux);
-
-                }
-                String codigo = aux;
-
-                try{
-                aux = inData.readLine();
-                if(aux.equals("") || !((aux.trim()).matches("\\d+"))){
-                    throw new LivroCadastroEx(aux);
-                }
-                }
-                catch(LivroCadastroEx ex){
-                    System.out.println(ex);
-                    ex.ledireito(aux);
-
-                }
-                int quant = Integer.parseInt(aux);
-            return new Livro(codigo, titulo, categoria, quant);
+    public String toString(){
+        return titulo+" | "+ categoria +" | "+quant+" | "+emprestados+"\n"+imprimehist();
     }
-}
+    }

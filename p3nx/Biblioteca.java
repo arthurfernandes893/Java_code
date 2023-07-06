@@ -56,21 +56,21 @@ public class Biblioteca {
 
 
     
-    /*
+    
     public void leArquivo(String file_name) throws ClassNotFoundException,IOException,FileNotFoundException{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file_name)); 
         Object aux = in.readObject();
         if (aux instanceof Hashtable) { //uso do tipo nao conhecido para ver se eh hashtable
              Hashtable hashtable = (Hashtable) aux; //polimorfismo para enxergar como hashtable de "algum tipo"
-            if (hashtable instanceof Hashtable<String, Usuario>) { //uso do metodo containsvalue para ver se ha objetos do tipo Usuario
+            if ((hashtable instanceof (Hashtable<String, Usuario>))) { //uso do metodo containsvalue para ver se ha objetos do tipo Usuario
                 this.usuarios_tb = (Hashtable) hashtable;
             } else if (hashtable.containsValue(Livro.class)) {
-                this.livros_tb = (Hashtable>) hashtable;
+                this.livros_tb = (Hashtable) hashtable;
            }  
        }
     }
 
-    */
+    
 
 
 
@@ -177,4 +177,133 @@ public class Biblioteca {
         }
         book_tb_file = aux;
     }
+
+    public static Usuario criauser() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String nome = aux;
+
+            try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String sobrenome = aux;
+            
+            try{
+                aux = inData.readLine();
+                if(aux.equals("") || !(ValidaData.checkString(aux))){
+                    throw new DataErradaException(aux.length(),false);
+                }
+            }
+            catch(DataErradaException ex){
+                System.out.println(ex);
+                GregorianCalendar data = ex.criadatacerta(aux);
+            }
+            GregorianCalendar data = ValidaData.criadata1(aux);
+
+            try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String endereco = aux;
+            
+            try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+
+            }
+            String codigo = aux;
+            
+            return new Usuario(nome, sobrenome, data, endereco, codigo);
+    }
+
+    public static Livro crialivro() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                String titulo = aux;
+
+                try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                String categoria = aux;
+
+                try{
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                String codigo = aux;
+
+                try{
+                aux = inData.readLine();
+                if(aux.equals("") || !((aux.trim()).matches("\\d+"))){
+                    throw new LivroCadastroEx(aux);
+                }
+                }
+                catch(LivroCadastroEx ex){
+                    System.out.println(ex);
+                    ex.ledireito(aux);
+
+                }
+                int quant = Integer.parseInt(aux);
+            return new Livro(codigo, titulo, categoria, quant);
+    }
+
+
 }
