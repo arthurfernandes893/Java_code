@@ -1,3 +1,4 @@
+package lp2g06.biblioteca;
 import java.io.*;
 
 public class NomeErradoException extends IOException {

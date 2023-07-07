@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import lp2g06.biblioteca.*;
 public class Biblioteca {
     Hashtable<String,Usuario> usuarios_tb;
     Hashtable<String,Livro> livros_tb;
@@ -28,9 +29,8 @@ public class Biblioteca {
         this.user_tb_file = "firstversion_users_tb.dat";
         this.book_tb_file = "firstversion_books_tb.dat";
     }
-
- 
-    //metodos//
+    
+    //metodos de cadastro//
     public void cadastraUsuario(Usuario user){
         usuarios_tb.put(user.getcoduser(), user);
     }
@@ -39,6 +39,7 @@ public class Biblioteca {
         livros_tb.put(book.getcodlivro(), book);
     }
 
+    //metodos de salvamento//
      public void salvaUsuario(Hashtable<String,Usuario> tb,String file) throws IOException,NullPointerException{
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file)); 
         out.writeObject(tb);
@@ -54,48 +55,75 @@ public class Biblioteca {
         //adicionar try catch no metodo de cima//
     }
 
-
-    
-    
-    public void leArquivo(String file_name) throws ClassNotFoundException,IOException,FileNotFoundException{
+    //conjunto modularizado de métodos para ler as bases de dados//
+    public void leArquivo(String file_name) throws IOException, FileNotFoundException{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(file_name)); 
-        Object aux = in.readObject();
-        if (aux instanceof Hashtable) { //uso do tipo nao conhecido para ver se eh hashtable
-             Hashtable hashtable = (Hashtable) aux; //polimorfismo para enxergar como hashtable de "algum tipo"
-            if ((hashtable instanceof (Hashtable<String, Usuario>))) { //uso do metodo containsvalue para ver se ha objetos do tipo Usuario
-                this.usuarios_tb = (Hashtable) hashtable;
-            } else if (hashtable.containsValue(Livro.class)) {
-                this.livros_tb = (Hashtable) hashtable;
-           }  
-       }
+        if(file_name.equals(this.user_tb_file)){
+            try{
+                leUser(file_name, in);
+            }
+            catch(TabelaNaoEncontradaEx ex){
+                System.out.println(ex);
+                in.close();
+            }
+            in.close();
+        }
+        else{
+            if(file_name.equals(this.book_tb_file)){
+            try{
+                leLivro(file_name, in);
+            }
+            catch(TabelaNaoEncontradaEx ex){
+                System.out.println(ex);
+                in.close();
+            }
+            in.close();
+            }
+        }
+        
+    }
+    public void leUser(String file_name, ObjectInputStream in)throws TabelaNaoEncontradaEx{
+      //  ObjectInputStream in = new ObjectInputStream(new FileInputStream(file_name));  
+        try{
+            this.usuarios_tb = (Hashtable<String,Usuario>) in.readObject();
+        }
+        catch(ClassNotFoundException ex){
+            throw new TabelaNaoEncontradaEx(file_name);
+        }
+        catch(IOException ex){
+            throw new TabelaNaoEncontradaEx(file_name);
+        }
+       
+    }
+     public void leLivro(String file_name, ObjectInputStream in)throws TabelaNaoEncontradaEx{  
+        try{
+            this.livros_tb = (Hashtable<String,Livro>) in.readObject();
+        }
+        catch(ClassNotFoundException ex){
+            throw new TabelaNaoEncontradaEx(file_name);
+        }
+        catch(IOException ex){
+            throw new TabelaNaoEncontradaEx(file_name);
+        }
+       
     }
 
-    
-
-
-
-    public void emprestaLivro(Usuario user,Livro book) throws CopiaNaoDisponivelEx{
-       
+    //metodos de emprestimo e devolucao//
+    public void emprestaLivro(Usuario user,Livro book){
         try{book.empresta();}
         catch(CopiaNaoDisponivelEx ex){
            // BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
             System.out.println(ex);
-           
         }
         user.addLivroHist(new GregorianCalendar(), book.getcodlivro());
     }
     
-    public void devolveLivro(Usuario user, Livro book) { //throws DevolucaoAtrasadaEx//
+    public void devolveLivro(Usuario user, Livro book) {
         try{book.devolve();}
         catch(NenhumaCopiaEmprestadaEx e){
             System.out.println(e);
         }
         GregorianCalendar devolucao = new GregorianCalendar();
-        
-        /* varrer os arraylists procurando por um par de valores iguais com codigo de ususario
-         * e de livro. 
-         * As datas de devolução devem estar, tambem, vazias
-         */
         for (Emprest e : user.gethist()) {
             for(EmprestPara p : book.gethist()){
                 if(user.getcoduser() == p.getcoduser()){
@@ -122,7 +150,7 @@ public class Biblioteca {
         return livros;
     }
 
-      public String imprimeUsuarios(Hashtable<String,Usuario> usuariostb){
+    public String imprimeUsuarios(Hashtable<String,Usuario> usuariostb){
         //Collections.sort(livrostb, Comparator.comparing(Livro::gettitulo));
         String users ="";
         for (String cod : usuariostb.keySet()) {
@@ -142,6 +170,7 @@ public class Biblioteca {
         return u;
     }
 
+    //metodos auxiliares//
     public Livro getbook(String cod)throws LivroNaoCadastradoEx{
         Livro b;
         try{b = (Livro) livros_tb.get(cod);}

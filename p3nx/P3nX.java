@@ -6,7 +6,7 @@ public class P3nX {
     //emprestimo// //try{emprestar e getlivro get usuario}catch exceptions{perguntar conitnuar ou desistir}
     //manutencao//
     public void manutencao(){
-
+        
     }
     //cadastro//
     public void cadastro(Biblioteca lib)throws NomeErradoException, IOException,LivroCadastroEx,DataErradaException{
@@ -18,8 +18,9 @@ public class P3nX {
                 opcao = inData.readLine();
                 System.out.println("OPCOES DE CADASTRO:\n[1].cadastrar Usuario\n[2].Cadastrar Livro\n[3].Salvar\n[4].Voltar");
             }
-        
-        if(opcao.equals("1")){
+        int saida =0;
+        while(saida ==0){
+            if(opcao.equals("1")){
             lib.cadastraUsuario(Biblioteca.criauser());
         }
 
@@ -65,6 +66,8 @@ public class P3nX {
                 }
             }
         }
+        }
+        
 
     }
     public void menu(){ //usar principio do 2 com while saida 0 e somar 1 pra sair do bloco.

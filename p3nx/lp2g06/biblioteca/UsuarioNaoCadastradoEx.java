@@ -1,3 +1,5 @@
+package lp2g06.biblioteca;
+
 public class UsuarioNaoCadastradoEx extends Exception{
     String cod;
 

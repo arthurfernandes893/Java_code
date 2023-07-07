@@ -1,3 +1,4 @@
+package lp2g06.biblioteca;
 public class CopiaNaoDisponivelEx extends Exception {
     int emprestados;
     int quant;

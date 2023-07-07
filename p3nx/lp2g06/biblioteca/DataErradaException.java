@@ -1,6 +1,7 @@
+package lp2g06.biblioteca;
+
 import java.util.*;
 import java.io.*;
-
 public class DataErradaException extends NumberFormatException{
     boolean check;
     int len;

@@ -1,8 +1,10 @@
+package lp2g06.biblioteca;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-//import p3nX.lp2g06.biblioteca.EmprestPara;
+
 
 public class Livro implements Serializable{
     private String codigoLivro;
@@ -41,8 +43,8 @@ public class Livro implements Serializable{
         }
     }
 
-    public void addUsuarioHist(String codigoUsuario, GregorianCalendar dataEmprest,GregorianCalendar dataDevolv){
-        EmprestPara emprestado = new EmprestPara(codigoUsuario,dataEmprest,dataDevolv);
+    public void addUsuarioHist(String codigoUsuario, GregorianCalendar dataEmprest){
+        EmprestPara emprestado = new EmprestPara(codigoUsuario,dataEmprest);
         Hist.add(emprestado);
     }
 
@@ -57,6 +59,6 @@ public class Livro implements Serializable{
     }
 
     public String toString(){
-        return titulo+" | "+ categoria +" | "+quant+" | "+emprestados+"\n"+imprimehist();
+        return titulo+" | "+ categoria +" | "+quant+" | "+emprestados+"\n";
     }
     }

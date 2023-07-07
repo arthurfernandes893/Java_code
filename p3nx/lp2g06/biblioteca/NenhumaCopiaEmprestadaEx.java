@@ -1,3 +1,4 @@
+package lp2g06.biblioteca;
 public class NenhumaCopiaEmprestadaEx extends Exception {
     int emprestados;
     int quant;

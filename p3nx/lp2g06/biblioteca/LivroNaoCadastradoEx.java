@@ -1,3 +1,5 @@
+package lp2g06.biblioteca;
+
 public class LivroNaoCadastradoEx extends Exception {
     String cod;
 

@@ -1,3 +1,5 @@
+package lp2g06.biblioteca;
+
 import java.io.*;
 public class LivroCadastroEx extends Exception{
     String m;String word;
