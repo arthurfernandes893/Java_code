@@ -34,7 +34,7 @@ public class DataErradaException extends NumberFormatException{
                 
         System.out.println("Ano:");
         line = inData.readLine();
-        while (!ValidaData.isYear(Integer.parseInt(line))){
+        while (line.length()>4 || !ValidaData.isYear(Integer.parseInt(line))){
             System.out.println("Ano inserido de forma errada, insira um numero entre 1920 e 2023:");
             line = inData.readLine();
         }

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 public class Emprest implements Serializable{
-    GregorianCalendar dataEmprest;
-    GregorianCalendar dataDevolv;
+    public GregorianCalendar dataEmprest;
+    public GregorianCalendar dataDevolv;
     String codigoLivro;
 
     public Emprest(GregorianCalendar dataEmprest, String codigoLivro){

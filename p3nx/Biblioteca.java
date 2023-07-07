@@ -211,6 +211,7 @@ public class Biblioteca {
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
         try{
+                System.out.println("NOME: ");            
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new NomeErradoException(aux);
@@ -224,6 +225,7 @@ public class Biblioteca {
             String nome = aux;
 
             try{
+                System.out.println("SOBRENOME:");
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new NomeErradoException(aux);
@@ -237,8 +239,9 @@ public class Biblioteca {
             String sobrenome = aux;
             
             try{
+                System.out.println("NASCIMENTO:");
                 aux = inData.readLine();
-                if(aux.equals("") || !(ValidaData.checkString(aux))){
+                if(aux.equals("") || !(ValidaData.checkString(aux)) || aux.length()<8){
                     throw new DataErradaException(aux.length(),false);
                 }
             }
@@ -249,6 +252,7 @@ public class Biblioteca {
             GregorianCalendar data = ValidaData.criadata1(aux);
 
             try{
+                System.out.println("ENDERECO");
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new NomeErradoException(aux);
@@ -262,6 +266,7 @@ public class Biblioteca {
             String endereco = aux;
             
             try{
+                System.out.println("CODIGO DO USUARIO:");
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new NomeErradoException(aux);

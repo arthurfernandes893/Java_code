@@ -6,8 +6,8 @@ import java.util.GregorianCalendar;
 
 public class EmprestPara implements Serializable{
     private String codigoUsuario;
-    GregorianCalendar dataEmprest;
-    GregorianCalendar dataDevolv;
+    public GregorianCalendar dataEmprest;
+    public GregorianCalendar dataDevolv;
     
     public EmprestPara(String codigoUsuario, GregorianCalendar dataEmprest){
         this.codigoUsuario = codigoUsuario;
