@@ -14,7 +14,7 @@ public class Biblioteca {
         this.user_tb_file = "firstversion_users_tb.dat";
         this.book_tb_file = "firstversion_books_tb.dat";
     }
-    public Biblioteca(String nome1, String nome2) throws ClassNotFoundException,IOException,FileNotFoundException{
+    public Biblioteca(String nome1, String nome2) throws IOException,FileNotFoundException, ClassNotFoundException{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(nome1));
         ObjectInputStream inb = new ObjectInputStream(new FileInputStream(nome2)); 
         Object aux = in.readObject();
@@ -25,9 +25,6 @@ public class Biblioteca {
         this.livros_tb =  (Hashtable<String,Livro>) aux2;
         in.close();
         inb.close();
-        
-        this.user_tb_file = "firstversion_users_tb.dat";
-        this.book_tb_file = "firstversion_books_tb.dat";
     }
     
     //metodos de cadastro//
@@ -56,9 +53,10 @@ public class Biblioteca {
     }
 
     //conjunto modularizado de métodos para ler as bases de dados//
-    public void leArquivo(String file_name) throws IOException, FileNotFoundException{
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file_name)); 
-        if(file_name.equals(this.user_tb_file)){
+    public void leArquivo(String file_name, int escolha) throws IOException, FileNotFoundException{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file_name));
+
+        if(escolha ==1){
             try{
                 leUser(file_name, in);
             }
@@ -69,7 +67,7 @@ public class Biblioteca {
             in.close();
         }
         else{
-            if(file_name.equals(this.book_tb_file)){
+            if(escolha ==2){
             try{
                 leLivro(file_name, in);
             }
@@ -188,9 +186,9 @@ public class Biblioteca {
     public void setuserfilename() throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
-        System.out.println("Entre com o novo nome do arquivo:");
+        System.out.println("Entre com o novo nome do arquivo de usuarios:");
         while(aux.equals("")){
-            System.out.println("Entre com o novo nome do arquivo:");
+            System.out.println("Entre com o novo nome do arquivo usuarios:");
             aux = inData.readLine();
         }
         user_tb_file = aux;
@@ -199,9 +197,9 @@ public class Biblioteca {
     public void setbooksfilename() throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
-        System.out.println("Entre com o novo nome do arquivo:");
+        System.out.println("Entre com o novo nome do arquivo de livros:");
         while(aux.equals("")){
-            System.out.println("Entre com o novo nome do arquivo:");
+            System.out.println("Entre com o novo nome do arquivo de livros:");
             aux = inData.readLine();
         }
         book_tb_file = aux;
@@ -281,7 +279,25 @@ public class Biblioteca {
             
             return new Usuario(nome, sobrenome, data, endereco, codigo);
     }
+    public String getcode() throws IOException{
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String aux = "";
+        try{
+                System.out.println("CODIGO:");
+                aux = inData.readLine();
+                if(aux.equals("")){
+                    throw new NomeErradoException(aux);
+                }
+            }
+            catch(NomeErradoException ex){
+                System.out.println(ex);
+                ex.ledireito(aux);
+                return aux;
 
+            }
+          
+        return aux;
+    }
     public static Livro crialivro() throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
