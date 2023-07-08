@@ -14,17 +14,24 @@ public class Biblioteca {
         this.user_tb_file = "firstversion_users_tb.dat";
         this.book_tb_file = "firstversion_books_tb.dat";
     }
-    public Biblioteca(String nome1, String nome2) throws IOException,FileNotFoundException, ClassNotFoundException{
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(nome1));
-        ObjectInputStream inb = new ObjectInputStream(new FileInputStream(nome2)); 
-        Object aux = in.readObject();
-        Object aux2 = inb.readObject();
+    public Biblioteca(String nome1, String nome2) throws IOException{
+        try{    
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(nome1));
+            ObjectInputStream inb = new ObjectInputStream(new FileInputStream(nome2)); 
+            Object aux = in.readObject();
+            Object aux2 = inb.readObject();
+            this.usuarios_tb =  (Hashtable<String,Usuario>) aux;
+            this.livros_tb =  (Hashtable<String,Livro>) aux2;
+            in.close();
+            inb.close();
+        }
+        catch(ClassNotFoundException ex){
+            System.out.print(ex);
+        }
+        catch(FileNotFoundException ex){
+            System.out.println(ex);
+        }
         
-        this.usuarios_tb =  (Hashtable<String,Usuario>) aux;
-        
-        this.livros_tb =  (Hashtable<String,Livro>) aux2;
-        in.close();
-        inb.close();
     }
     
     //metodos de cadastro//
@@ -137,23 +144,31 @@ public class Biblioteca {
         }
     }
 
-    //metodos de impressao das listas de livros e de usuarios//
+    /*metodos de impressao utilizando a 
+     * tecnica do TREEMAP que permite 
+     * ordenacao */
     public String imprimeLivros(Hashtable<String,Livro> livrostb){
-        //Collections.sort(livrostb, Comparator.comparing(Livro::gettitulo));
-        String livros ="";
-        for (String cod : livrostb.keySet()) {
-            Livro book = livrostb.get(cod);
-            livros+=book.toString();
+        //definicao dos comparators usando a mesma estrategia do P2nX
+        Comparator<Livro> bookcomparator = Comparator.comparing(Livro::gettitulo);
+       
+        //definicao dos treemaps//
+        TreeMap<String,Livro> sortedbooks = new TreeMap(bookcomparator);
+        
+        //alocacao no treemap//
+        sortedbooks.putAll(livrostb);
+        
+      String livros ="";
+        for (Map.Entry<String,Livro> book : sortedbooks.entrySet()) {
+            livros+=book.toString()+"\n";
         }
         return livros;
     }
 
-    public String imprimeUsuarios(Hashtable<String,Usuario> usuariostb){
-        //Collections.sort(livrostb, Comparator.comparing(Livro::gettitulo));
-        String users ="";
-        for (String cod : usuariostb.keySet()) {
-            Usuario usuario = usuariostb.get(cod);
-            users+=usuario.toString();
+    public String imprimeUsuarios() throws UsuarioNaoCadastradoEx{
+        String users = "";
+        Hashtable<String,Usuario> usuarios = this.usuarios_tb;
+        for(String key : this.usuarios_tb.keySet()){
+         users += getuser(key).toString()+"\n";
         }
         return users;
     }
@@ -193,7 +208,6 @@ public class Biblioteca {
         }
         user_tb_file = aux;
     }
-
     public void setbooksfilename() throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
@@ -295,13 +309,17 @@ public class Biblioteca {
                 return aux;
 
             }
-          
+            catch(IOException ex){
+                
+            }
+           
         return aux;
     }
     public static Livro crialivro() throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
         try{
+                System.out.println("TITULO:");
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new LivroCadastroEx(aux);
@@ -315,6 +333,7 @@ public class Biblioteca {
                 String titulo = aux;
 
                 try{
+                System.out.println("CATEGORIA");
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new LivroCadastroEx(aux);
@@ -328,6 +347,7 @@ public class Biblioteca {
                 String categoria = aux;
 
                 try{
+                System.out.println("CODIGO DO LIVRO");
                 aux = inData.readLine();
                 if(aux.equals("")){
                     throw new LivroCadastroEx(aux);
@@ -341,6 +361,7 @@ public class Biblioteca {
                 String codigo = aux;
 
                 try{
+                System.out.println("QUANTIDADE");
                 aux = inData.readLine();
                 if(aux.equals("") || !((aux.trim()).matches("\\d+"))){
                     throw new LivroCadastroEx(aux);

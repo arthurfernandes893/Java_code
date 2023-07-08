@@ -58,6 +58,12 @@ public class Livro implements Serializable{
         return codigoLivro;
     }
 
+    public void imprimehist(){
+        ArrayList<EmprestPara>hist = Hist;
+        for(EmprestPara em : hist){
+            System.out.println(em);
+        }
+    }
     public String toString(){
         return titulo+" | "+ categoria +" | "+quant+" | "+emprestados+"\n";
     }
