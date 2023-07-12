@@ -153,9 +153,8 @@ public class Biblioteca {
         catch(IOException ex){
             throw new TabelaNaoEncontradaEx(file_name);
         }
-       
     }
-     public void leLivro(String file_name, ObjectInputStream in)throws TabelaNaoEncontradaEx{  
+    public void leLivro(String file_name, ObjectInputStream in)throws TabelaNaoEncontradaEx{  
         try{
             this.livros_tb = (Hashtable<String,Livro>) in.readObject();
         }
@@ -165,7 +164,6 @@ public class Biblioteca {
         catch(IOException ex){
             throw new TabelaNaoEncontradaEx(file_name);
         }
-       
     }
 
     //metodos de emprestimo e devolucao//
@@ -173,6 +171,7 @@ public class Biblioteca {
         try{
             book.empresta();
             user.addLivroHist(new GregorianCalendar(), book.getcodlivro());
+            book.addUsuarioHist(user.getcoduser(),new GregorianCalendar());
         }
         catch(CopiaNaoDisponivelEx ex){
            // BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
@@ -189,7 +188,7 @@ public class Biblioteca {
                 for(EmprestPara p : book.gethist()){
                     if(user.getcoduser() == p.getcoduser()){
                         if(e.dataEmprest.compareTo(p.dataEmprest) == 0){
-                            if((e.dataDevolv.compareTo(p.dataDevolv) == 0) && e.dataDevolv.equals(null)){
+                            if(!(e.dataDevolv == null) && (e.dataDevolv.compareTo(p.dataDevolv) == 0)){
                                 e.dataDevolv = devolucao;
                                 p.dataDevolv = devolucao;
                             }
@@ -259,45 +258,56 @@ public class Biblioteca {
     public String getuserfilename(){
         return user_tb_file;
     }
-    public void setuserfilename() throws IOException{
+    public void setuserfilename(){
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
-        System.out.println("Entre com o novo nome do arquivo de usuarios:");
-        while(aux.equals("")){
-            System.out.println("Entre com o novo nome do arquivo usuarios:");
+        try{
+            while(aux.equals("")){
+            System.out.println("Entre com o novo nome do arquivo de usuarios:");
             aux = inData.readLine();
+            }
+            user_tb_file = aux;
         }
-        user_tb_file = aux;
+        catch(IOException ex){
+            setuserfilename();
+        }
     }
-    public void setbooksfilename() throws IOException{
+    public void setbooksfilename() {
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
-        System.out.println("Entre com o novo nome do arquivo de livros:");
-        while(aux.equals("")){
+        try{
+            while(aux.equals("")){
             System.out.println("Entre com o novo nome do arquivo de livros:");
             aux = inData.readLine();
+            }
+            this.book_tb_file = aux;
         }
-        book_tb_file = aux;
+        catch(IOException ex){
+            setbooksfilename();
+        }
     }
 
     public static Usuario criauser(){
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";
         try{
+            while(aux.equals("")){
             System.out.println("NOME: ");            
             aux = inData.readLine();
-           
+            }
         }
         catch(IOException ex){
-            ledireito(aux);
-            
+            ledireito(aux); 
         }
         String nome = aux;
 
 
         try{
+            aux = "";
+          while(aux.equals("")){
             System.out.println("SOBRENOME: ");            
             aux = inData.readLine();
+            }
            
         }
         catch(IOException ex){
@@ -308,8 +318,11 @@ public class Biblioteca {
         
         
         try{
-            System.out.println("NASCIMENTO:");
-            aux = inData.readLine(); 
+            aux = "";
+            while(aux.equals("") || aux.length()!=8 || !(ValidaData.checkString(aux))){
+                System.out.println("NASCIMENTO (ddmmaaaa):");            
+                aux = inData.readLine();
+            }
         }
         catch(IOException ex){
             System.out.println("ERRO NA LEITURA---tente novamente!\nNASCIMENTO:");
@@ -322,8 +335,11 @@ public class Biblioteca {
 
 
         try{
-            System.out.println("ENDERECO: ");            
-            aux = inData.readLine();
+            aux = "";
+            while(aux.equals("")){
+                System.out.println("ENDERECO: ");            
+                aux = inData.readLine();
+            }
         }
         catch(IOException ex){
             ledireito(aux);
@@ -333,8 +349,11 @@ public class Biblioteca {
 
 
         try{
-            System.out.println("codigo do usuario: ");            
-            aux = inData.readLine();
+            aux = "";
+            while(aux.equals("")){
+                System.out.println("CODIGO DO USUARIO: ");            
+                aux = inData.readLine();
+            }
         }
         catch(IOException ex){
             ledireito(aux);
@@ -405,19 +424,19 @@ public class Biblioteca {
         if(ValidaData.checkString(aux)){quant = Integer.parseInt(aux);}
         return new Livro(codigo, titulo, categoria, quant);
     }
-    public static String ledireito(String line){
+    public static void ledireito(String line){
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         try{
-        while(line.equals("") || !line.equals("Y") || !line.equals("y")){//assegurar a continuidade ou interrupcao do loop//
-            System.out.println("[y].inserir corretamente");
+        while(line.equals("")){//assegurar a continuidade ou interrupcao do loop//
+            System.out.println("Insira novamente a informação:");
             line = inData.readLine();
         }
         }
         catch(IOException ex){
+            System.out.println("jogou ex no le direito");
             ledireito(line);
         }
 
-        return line;
     }
 
 }
