@@ -2,13 +2,48 @@ import java.io.*;
 import java.util.*;
 import lp2g06.biblioteca.*;
 public class P3nX {
-    public static void main(String[] args) throws DataErradaException, NomeErradoException, IOException, LivroCadastroEx, UsuarioNaoCadastradoEx{
-       P3nX prog = new P3nX();
-       Biblioteca lib = new Biblioteca();
-       
-     
-    }    
+    public static void main(String[] args){
+        Biblioteca lib;
+        try{
+            lib = new Biblioteca("firstversion_users_tb.dat","firstversion_books_tb.dat");
+              //lib.cadastraUsuario(Biblioteca.criauser());
+                //lib.cadastraLivro(Biblioteca.crialivro());
+               
+            //System.out.println();
+            for(String key : lib.livros_tb.keySet()){
+                try{System.out.println(lib.getbook(key));}
+                catch(LivroNaoCadastradoEx ex){}
+              
+            }
 
+
+
+        try{
+        lib.devolveLivro(lib.getuser("123456789"),lib.getbook("2"));
+        lib.salvatudo();
+            System.out.println("--------------------------------------------");
+          for(String key : lib.livros_tb.keySet()){
+                try{System.out.println(lib.getbook(key));}
+                catch(LivroNaoCadastradoEx ex){}
+              
+            }
+
+
+
+        }
+        catch(UsuarioNaoCadastradoEx ex){System.out.println(ex);}
+        catch(LivroNaoCadastradoEx ex){System.out.println(ex);}
+        
+        
+    }
+        catch(ErroNaAberturaEx ex){
+            System.out.println("erro acessando os arquivos");
+             
+            System.exit(-1);
+        }
+      
+    }    
+/* 
     //metodos auxiliares//
     public static Boolean checkString(String arg){ // metodo pra verificar strings como idade e cpf se estão apenas com caractefes numericos//
         arg = arg.trim();
@@ -389,4 +424,7 @@ public class P3nX {
 
     }
     
+
+
+    */
 }

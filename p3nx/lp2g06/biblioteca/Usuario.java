@@ -37,4 +37,8 @@ public class Usuario extends Pessoa{
             System.out.println(em);
         }
     }
+
+    public String toString(){
+        return codigoUsuario + " || " + super.toString() + " || " + endereco;
+    }
 }
