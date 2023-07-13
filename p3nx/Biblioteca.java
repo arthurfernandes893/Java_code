@@ -246,11 +246,15 @@ public class Biblioteca {
     //metodos auxiliares//
     public Livro getbook(String cod)throws LivroNaoCadastradoEx{
         Livro b;
-        try{b = (Livro) livros_tb.get(cod); return b;}
-        catch(NullPointerException ex){
+        //try{
+            b = (Livro) livros_tb.get(cod);
+        //}
+        //catch(NullPointerException ex){
+          if(b == null){
             throw new LivroNaoCadastradoEx(cod);
-        }
-     
+          }
+        //}
+        return b;
     }
     public String getbookfilename(){
         return book_tb_file;
@@ -424,19 +428,21 @@ public class Biblioteca {
         if(ValidaData.checkString(aux)){quant = Integer.parseInt(aux);}
         return new Livro(codigo, titulo, categoria, quant);
     }
-    public static void ledireito(String line){
+    public static String ledireito(String line){
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         try{
         while(line.equals("")){//assegurar a continuidade ou interrupcao do loop//
             System.out.println("Insira novamente a informação:");
             line = inData.readLine();
+            return line;
         }
+        
         }
         catch(IOException ex){
             System.out.println("jogou ex no le direito");
             ledireito(line);
         }
-
+        return line;
     }
 
 }

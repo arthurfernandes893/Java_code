@@ -58,7 +58,7 @@ public class P3nX {
         catch(IOException  ex){ 
             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>5){
                 System.out.println("OPCOES DE RELATORIO:\n[1].EXIBIR USUARIOS\n[2].EXIBIR LIVROS\n[3].HISTORICO DE EMPRESTIMO [USUARIO]\n[4].HISTORICO DE EMPRESTIMO [LIVRO]\n[5].voltar");
-                Biblioteca.ledireito(opcao);
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
@@ -119,7 +119,7 @@ public class P3nX {
              opcao =""; chave =0;
             while(opcao.equals(empty) || checkString(opcao)==false || chave<1 || chave>5){
                 System.out.println("OPCOES DE RELATORIO:\n[1].EXIBIR USUARIOS\n[2].EXIBIR LIVROS\n[3].HISTORICO DE EMPRESTIMO [USUARIO]\n[4].HISTORICO DE EMPRESTIMO [LIVRO]\n[5].voltar");
-                Biblioteca.ledireito(opcao);
+                opcao = Biblioteca.ledireito(opcao);
                 System.out.println("aaaaa "+ opcao+"-------");
                // opcao.trim();
                 System.out.println(opcao+"-------"+checkString(opcao));
@@ -144,7 +144,7 @@ public class P3nX {
         catch(IOException ex){
              while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>3){
                 System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].VOLTAR");
-                Biblioteca.ledireito(opcao);
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
@@ -190,7 +190,7 @@ public class P3nX {
             opcao =""; chave =0;
             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>3){
                 System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].DEVOLUCAO\n[4].voltar");
-                Biblioteca.ledireito(opcao);
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
@@ -220,7 +220,7 @@ public class P3nX {
         catch(IOException ex){
             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>5){
                 System.out.println("OPCOES DE MANUTENCAO:\n[1].INICAR NOVA BASE DE DADOS\n[2].CARREGAR BASE DE DADOS EXISTENTE\n[3].SALVAR BASE DE DADOS\n[4].SALVAR NOVA BASE DE DADOS\n[5].voltar");
-                Biblioteca.ledireito(opcao);
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
@@ -270,7 +270,7 @@ public class P3nX {
             opcao =""; chave =0;
             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>5){
                 System.out.println("OPCOES DE MANUTENCAO:\n[1].INICAR NOVA BASE DE DADOS\n[2].CARREGAR BASE DE DADOS EXISTENTE\n[3].SALVAR BASE DE DADOS\n[4].SALVAR NOVA BASE DE DADOS\n[5].voltar");
-                Biblioteca.ledireito(opcao);
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
