@@ -1,9 +1,11 @@
+package lp2g06.biblioteca;
+
 import java.io.*;
 import java.util.*;
 import lp2g06.biblioteca.*;
 public class Biblioteca {
-    Hashtable<String,Usuario> usuarios_tb;
-    Hashtable<String,Livro> livros_tb;
+    private Hashtable<String,Usuario> usuarios_tb;
+    private Hashtable<String,Livro> livros_tb;
     private String user_tb_file;
     private String book_tb_file;
 
@@ -168,10 +170,11 @@ public class Biblioteca {
 
     //metodos de emprestimo e devolucao//
     public void emprestaLivro(Usuario user,Livro book){
+        GregorianCalendar data = new GregorianCalendar();
         try{
             book.empresta();
-            user.addLivroHist(new GregorianCalendar(), book.getcodlivro());
-            book.addUsuarioHist(user.getcoduser(),new GregorianCalendar());
+            user.addLivroHist(data, book.getcodlivro());
+            book.addUsuarioHist(user.getcoduser(),data);
         }
         catch(CopiaNaoDisponivelEx ex){
            // BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
@@ -208,35 +211,37 @@ public class Biblioteca {
      * ordenacao */
     
     public String imprimeLivros(Hashtable<String,Livro> livrostb){
-        //definicao dos comparators usando a mesma estrategia do P2nX
-        Comparator<Livro> bookcomparator = Comparator.comparing(Livro::gettitulo);
-       
-        //definicao dos treemaps//
-        TreeMap<String,Livro> sortedbooks = new TreeMap(bookcomparator);
-        
-        //alocacao no treemap//
-        sortedbooks.putAll(livrostb);
-        
-      String livros ="";
-        for (Map.Entry<String,Livro> book : sortedbooks.entrySet()) {
-            livros+=book.toString()+"\n";
+        String livros ="";
+        for(String key : livrostb.keySet()){
+            livros += livrostb.get(key).toString();
         }
         return livros;
     }
 
-    public String imprimeUsuarios() throws UsuarioNaoCadastradoEx{
+    public String imprimeUsuarios(){
         String users = "";
         Hashtable<String,Usuario> usuarios = this.usuarios_tb;
+        try{
         for(String key : usuarios.keySet()){
          users += getuser(key).toString()+"\n";
         }
+        }
+        catch(UsuarioNaoCadastradoEx ex){}
         return users;
     }
    
     //metodos get livro e get usuario jogando excecoes caso nao achem//
     public Usuario getuser(String cod) throws UsuarioNaoCadastradoEx{
         Usuario u;
-        try{u = (Usuario) usuarios_tb.get(cod); return u;}
+        try{
+            u = (Usuario) usuarios_tb.get(cod); 
+            if(u!=null){
+                return u;
+            }
+            else{
+                throw new UsuarioNaoCadastradoEx(cod);
+            }
+        }
         catch(NullPointerException ex){
             throw new UsuarioNaoCadastradoEx(cod);
         }
@@ -262,6 +267,14 @@ public class Biblioteca {
     public String getuserfilename(){
         return user_tb_file;
     }
+    
+    public Hashtable<String,Usuario>getusertable(){
+        return this.usuarios_tb;
+    }
+    public Hashtable<String,Livro>getbooktable(){
+        return this.livros_tb;
+    }
+    
     public void setuserfilename(){
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String aux = "";

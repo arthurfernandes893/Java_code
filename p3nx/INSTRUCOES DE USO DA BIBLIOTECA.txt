@@ -1,0 +1,18 @@
+INSTRUCOES DE USO DA BIBLIOTECA
+
+1. INICIE O PROGRAMA COM A BASE DE DADOS QUE DESEJAR SELECIONANDO A OPCAO 2 E DEPOIS OS NOMES DO ARQUIVO
+	a. se a opcao 1 for selecionada, sera criado um arquivo com o nome indicado, se ja existir, sera sobrescrito.
+	b. sera possivel alterar o nome do arquivo na opcao manutencao
+2. script pode ser rodado do diretorio que se encontra pois fara as operacoes necessarias para que o programa rode
+3. NAO abra arquivos nao irmaos - para evitar conflito com os dados persistidos
+4. sera possivel iniciar uma base de dados do zero ao selecionar a opcao 2. a opcao 1 se encontra disponivel aqueles que desejarem iniciar do zero com um nome já predefinido.
+
+
+SUGESTOES DE OPERACAO
+codigo do usuario: 123456789
+codigo do livro: 1
+
+!!! O USUARIO PODERA EFETUAR SEUS CADASTROS
+
+!!!! NAO SE ESQUECA DE SALVAR ANTES DE ENCERRAR O PROGRAMA
+

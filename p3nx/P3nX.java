@@ -4,13 +4,11 @@ import lp2g06.biblioteca.*;
 public class P3nX {
     public static void main(String[] args){
         P3nX prog = new P3nX();
-        try{
-            Biblioteca lib = new Biblioteca("firstversion_users_tb.dat","firstversion_books_tb.dat");
-            prog.relatorio(lib);
-        }
-        catch(ErroNaAberturaEx ex){
-            System.out.println(ex);
-        }
+        Biblioteca lib = inicio();
+        menu(prog, lib);
+        
+    
+        
     }
     //metodos auxiliares//
     public static Boolean checkString(String arg){ // metodo pra verificar strings como idade e cpf se estão apenas com caractefes numericos//
@@ -24,14 +22,13 @@ public class P3nX {
             Boolean ehnum = true;
             for(int location = 0; location<arg.length();location++){
                 if((arg.charAt(location)) < '0' || (arg.charAt(location)) > '9'){
-                    System.out.println(ehnum);
                     ehnum = false;
                 }
             }
             return ehnum;
         }
     }
-    public String crianomes(String n){
+    public static String crianomes(String n){
         String aux = "";
         System.out.println("Entre com o novo nome do arquivo:");
         while(aux.equals("")){
@@ -69,11 +66,11 @@ public class P3nX {
             }
             else{
                 if(chave == 1){
-                //    System.out.println("BASE DE DADOS DOS USUARIOS:\n"+lib.imprimeUsuarios());
+                    System.out.println("BASE DE DADOS DOS USUARIOS:\n"+lib.imprimeUsuarios());
                 }
                 else{
                     if(chave == 2){
-                    //    System.out.println("BASE DE DADOS DOS LIVROS:\n"+lib.imprimeLivros(lib.livros_tb));
+                        System.out.println("BASE DE DADOS DOS LIVROS:\n"+lib.imprimeLivros(lib.getbooktable()));
                     }
                     else{
                         if(chave ==3){
@@ -90,6 +87,9 @@ public class P3nX {
                             }
                             catch(UsuarioNaoCadastradoEx ex){
                                 System.out.println(ex);
+                            }
+                            catch(NullPointerException ex){
+                                System.out.println("USUARIO NAO ENCONTRADO");
                             }
                         }
                         else{
@@ -120,10 +120,7 @@ public class P3nX {
             while(opcao.equals(empty) || checkString(opcao)==false || chave<1 || chave>5){
                 System.out.println("OPCOES DE RELATORIO:\n[1].EXIBIR USUARIOS\n[2].EXIBIR LIVROS\n[3].HISTORICO DE EMPRESTIMO [USUARIO]\n[4].HISTORICO DE EMPRESTIMO [LIVRO]\n[5].voltar");
                 opcao = Biblioteca.ledireito(opcao);
-                System.out.println("aaaaa "+ opcao+"-------");
-               // opcao.trim();
-                System.out.println(opcao+"-------"+checkString(opcao));
-                
+                opcao.trim();  
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
         }
@@ -134,16 +131,18 @@ public class P3nX {
         String opcao = ""; int chave= 0; String empty = ""; int saida =0;
         
         try{
-            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>3){
-                System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].VOLTAR");
+            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
+                System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].DEVOLUCAO\n[4].voltar");
+                
                 opcao = inData.readLine();
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
             }
         }
         catch(IOException ex){
-             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>3){
-                System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].VOLTAR");
+             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
+                System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].DEVOLUCAO\n[4].voltar");
+                
                 opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
@@ -151,12 +150,12 @@ public class P3nX {
         }
         
         while(saida == 0){
-            if(chave == 3){
+            if(chave == 4){
                 saida+=1;
             }
             else{
                 if(chave ==1){
-                //   System.out.println(lib.imprimeLivros(lib.livros_tb));
+                    System.out.println(lib.imprimeLivros(lib.getbooktable()));
                 }
                 else{
                     if(chave ==2){
@@ -174,7 +173,8 @@ public class P3nX {
                         }
 
                         try{
-                            lib.emprestaLivro(lib.getuser(codebook),lib.getbook(codebook));
+                            codebook.trim();
+                            lib.emprestaLivro(lib.getuser(codeuser),lib.getbook(codebook));
                             System.out.println("EMPRESTIMO EFETUADO COM SUCESSO\n"+lib.getuser(codeuser).getnome() + " || "+codeuser+"\n"+lib.getbook(codebook).gettitulo() + " || "+codebook);
                         }
                         catch(UsuarioNaoCadastradoEx ex){
@@ -184,20 +184,40 @@ public class P3nX {
                             System.out.println(ex+"\n nao foi possivel concluir acao");
                         }    
                     }
+                    else{
+                        if(chave ==3){
+                              String codeuser = "";
+                            System.out.println("Insira o codigo do usuario:");
+                            codeuser = lib.getcode();
+                            System.out.println("Insira o codigo do livro:");
+                            String codebook = lib.getcode();
+                            try{
+                            lib.devolveLivro(lib.getuser(codeuser),lib.getbook(codebook));
+                            System.out.println("DEVOLUCAO EFETUADA COM SUCESSO COM SUCESSO\n"+lib.getuser(codeuser).getnome() + " || "+codeuser+"\n"+lib.getbook(codebook).gettitulo() + " || "+codebook);
+                            }
+                            catch(UsuarioNaoCadastradoEx ex){
+                                System.out.println(ex+"\n nao foi possivel concluir acao");
+                            }
+                            catch(LivroNaoCadastradoEx ex){
+                                System.out.println(ex+"\n nao foi possivel concluir acao");
+                            }    
+                        }
+                    }
                 }
             }
-          
+            if(saida != 1){
             opcao =""; chave =0;
-            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>3){
-                System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].DEVOLUCAO\n[4].voltar");
-                opcao = Biblioteca.ledireito(opcao);
-                opcao.trim();
-                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+                while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
+                    System.out.println("OPCOES DE EMPRESTIMO:\n[1].EXIBIR CADASTRO DE LIVROS\n[2].FAZER UM EMPRESTIMO\n[3].DEVOLUCAO\n[4].voltar");
+                    opcao = Biblioteca.ledireito(opcao);
+                    opcao.trim();
+                    if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+                }
             }
         }
         //salva em arquivo ao fim//
-        lib.salvaUsuario(lib.usuarios_tb, lib.getuserfilename());
-        lib.salvaLivro(lib.livros_tb, lib.getbookfilename());
+        lib.salvaUsuario(lib.getusertable(), lib.getuserfilename());
+        lib.salvaLivro(lib.getbooktable(), lib.getbookfilename());
     }
     //manutencao//
     public void manutencao(Biblioteca lib){
@@ -232,12 +252,7 @@ public class P3nX {
             }
             else{
                 if(chave ==1){ //criar base de dados//
-                   /*String nome1 ="";String nome2 ="";
-                    System.out.println("INSIRA NOME DA BASE DE USUARIOS\n(!WARNING: por precaucao, mude as tabelas para as suas respectivas duplas,\npara evitar confusao entre os dados e problemas na execução):");
-                    crianomes(nome1);
-                    System.out.println("INSIRA O NOME DA BASE DE LIVROS");
-                    crianomes(nome2);
-                    */
+                   
                     lib.setuserfilename();
                     lib.setbooksfilename();
                     lib.salvatudo();
@@ -247,9 +262,9 @@ public class P3nX {
                    if(chave ==2){ //carregar base de dados
                         String nome1 ="";String nome2 ="";
                         System.out.println("INSIRA NOME DA BASE DE USUARIOS:");
-                        crianomes(nome1);
+                        nome1 = lib.getcode();
                         System.out.println("INSIRA O NOME DA BASE DE LIVROS");
-                        crianomes(nome2);
+                        nome2 = lib.getcode();
                         lib.leArquivo(nome1,1);
                         lib.leArquivo(nome2,2);
                    }
@@ -277,23 +292,30 @@ public class P3nX {
            
         }
     }
-    //cadastro//
-    public void cadastro(Biblioteca lib)throws NomeErradoException, IOException,LivroCadastroEx,DataErradaException{
+    
+    public void cadastro(Biblioteca lib){
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String opcao = ""; int chave= 0; String empty = ""; int saida =0;
-        System.out.println("OPCOES DE CADASTRO:\n[1].cadastrar Usuario\n[2].Cadastrar Livro\n[3].Salvar\n[4].Voltar");
-        opcao = inData.readLine();
-        opcao.trim();
-        chave = Integer.parseInt(opcao);
-        while(saida ==0){
-            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
+       try{
+         while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
+            System.out.println("OPCOES DE CADASTRO:\n[1].cadastrar Usuario\n[2].Cadastrar Livro\n[3].Salvar\n[4].Voltar");
+            opcao = inData.readLine();
+            opcao.trim();
+            chave = Integer.parseInt(opcao);
+         }
+       }
+       catch(IOException ex){
+             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
                 
                 System.out.println("OPCOES DE CADASTRO:\n[1].cadastrar Usuario\n[2].Cadastrar Livro\n[3].Salvar\n[4].Voltar");
-                opcao = inData.readLine();
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
                 System.out.println(opcao);
             }
+       }
+       
+        while(saida ==0){
             if(chave ==4){
                 saida+=1;
             }
@@ -307,86 +329,54 @@ public class P3nX {
                     }
                     else{
                         if(chave == 3){
-                            System.out.println("Qual acervo registro deseja salvar?\n[1].USUARIOS\n[2].LIVROS");
-                            while(opcao.equals(empty) || chave<1 || chave >2){
-                                System.out.println("tente novamente\nQual acervo registro deseja salvar?\n[1].USUARIOS\n[2].LIVROS");
-                                opcao = inData.readLine();
-                                opcao.trim();
-                                chave = Integer.parseInt(opcao);
-                            }
-                            if(chave == 1){
-                                chave =0; //fator de ajuste das opcoes//
-                                while(opcao.equals(empty) || chave<1 || chave >2){
-                                    System.out.println("tente novamente\nDeseja salvar em outro arquivo?\n[1].Sim\n[2].Nao");
-                                    opcao = inData.readLine();
-                                    opcao.trim();
-                                    chave = Integer.parseInt(opcao);
-                                }
-                                if(chave == 1){
-                                    lib.setuserfilename();
-                                    lib.salvaUsuario(lib.usuarios_tb, lib.getuserfilename());
-                                }
-                                else{
-                                    lib.salvaUsuario(lib.usuarios_tb, lib.getuserfilename());
-                                }
-                            }
-                            else{
-                                while(opcao.equals(empty) || chave<1 || chave >2){
-                                    System.out.println("tente novamente\nDeseja salvar em outro arquivo?\n[1].Sim\n[2].Nao");
-                                    opcao = inData.readLine();
-                                    opcao.trim();
-                                    chave = Integer.parseInt(opcao);
-                                }
-                                if(chave ==1){
-                                    lib.setbooksfilename();;
-                                    lib.salvaUsuario(lib.usuarios_tb, lib.getbookfilename());
-                                }
-                                else{
-                                    lib.salvaUsuario(lib.usuarios_tb, lib.getbookfilename());
-                                }
-                            }
+                            lib.salvatudo();
                         }
                     }
                 }
             }
-        opcao = ""; chave= 0; 
-        }
-    }      
+
+            opcao = ""; chave= 0; 
+            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>4){
+                
+                System.out.println("OPCOES DE CADASTRO:\n[1].cadastrar Usuario\n[2].Cadastrar Livro\n[3].Salvar\n[4].Voltar");
+                opcao = Biblioteca.ledireito(opcao);
+                opcao.trim();
+                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+                System.out.println(opcao);
+            }
+        }   
+    }
+       
     //menu//
-    public static void menu(P3nX prog, Biblioteca lib) throws IOException, DataErradaException, LivroCadastroEx, UsuarioNaoCadastradoEx{ //usar principio do 2 com while saida 0 e somar 1 pra sair do bloco.
+    public static void menu(P3nX prog, Biblioteca lib){ //usar principio do 2 com while saida 0 e somar 1 pra sair do bloco.
         //primeira acao ao inicar o programa eh carregar a base de dados//
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         String opcao = ""; int chave= 0; String empty = ""; int saida =0;
-        System.out.println("OPCOES:\n[1].Carregar base de dados ou cadastrar livro/usuario\n[2].Fazer um emprestimo ou devolucao\n[3].alterar base de dados, iniciar do zero ou salvar\n[4].Imprimir relatorios[5].Encerrar");
         try{
-            opcao = inData.readLine();
-            opcao.trim();
-            if(checkString(opcao)){chave = Integer.parseInt(opcao);}
-        }
-        catch(IOException  ex){ 
             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>5){
-                System.out.println("OPCOES:\n[1].Carregar base de dados ou cadastrar livro/usuario\n[2].Fazer um emprestimo ou devolucao\n[3].alterar base de dados, iniciar do zero ou salvar\n[4].Imprimir relatorios[5].Encerrar");
+                System.out.println("OPCOES:\n[1].CADASTRO\n[2].EMPRESTIMO\n[3].MANUTENCAO\n[4].RELATORIO[5].Encerrar");
                 opcao = inData.readLine();
                 opcao.trim();
                 if(checkString(opcao)){chave = Integer.parseInt(opcao);}
                 System.out.println(chave);
             }
         }
-        while(saida == 0){
+        catch(IOException  ex){ 
             while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>5){
-                    System.out.println("OPCOES:\n[1].Carregar base de dados ou cadastrar livro/usuario\n[2].Fazer um emprestimo ou devolucao\n[3].alterar base de dados, iniciar do zero ou salvar\n[4].Imprimir relatorios[5].Encerrar");
-                opcao = inData.readLine();
+                  System.out.println("OPCOES:\n[1].CADASTRO\n[2].EMPRESTIMO\n[3].MANUTENCAO\n[4].RELATORIO[5].Encerrar");
+              
+                opcao = Biblioteca.ledireito(opcao);
                 opcao.trim();
-                if(checkString(opcao)){chave = Integer.parseInt(opcao);} 
+                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
                 System.out.println(chave);
             }
-
+        }
+        while(saida == 0){
             if(chave == 5){
-                lib.salvaUsuario(lib.usuarios_tb, lib.getuserfilename());
-                lib.salvaLivro(lib.livros_tb, lib.getbookfilename());
+                lib.salvaUsuario(lib.getusertable(), lib.getuserfilename());
+                lib.salvaLivro(lib.getbooktable(), lib.getbookfilename());
                 System.exit(0);
             }
-
             else{
                 if(chave ==1){
                     prog.cadastro(lib);
@@ -407,11 +397,70 @@ public class P3nX {
                     }
                 }
             }
+            opcao ="";chave =0;
+            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>5){
+                 System.out.println("OPCOES:\n[1].CADASTRO\n[2].EMPRESTIMO\n[3].MANUTENCAO\n[4].RELATORIO[5].Encerrar");
+              
+                opcao = Biblioteca.ledireito(opcao);
+                opcao.trim();
+                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+                System.out.println(chave);
+            }
+        }
+    }
 
+    public static Biblioteca inicio(){
+        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
+        String opcao = ""; int chave= 0; String empty = ""; int saida =0;
+        Biblioteca lib = null;
+        //garantir que uma opcao seja selecionada 
+        try{
+            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>2){
+                System.out.println("BEM VINDO A BIBLIOTECA - VAMOS COMECAR:\n1.COMECAR COM OS ARQUIVOS firstversion_users_tb.dat e firstversion_books_tb.dat do zero\n2.OUTRA BASE DE DADOS:");
+                opcao = inData.readLine();
+                opcao.trim();
+                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+            }
+        }
+        catch(IOException  ex){ 
+            while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>2){
+                System.out.println("BEM VINDO A BIBLIOTECA - VAMOS COMECAR:\n1.COMECAR COM OS ARQUIVOS firstversion_users_tb.dat e firstversion_books_tb.dat do zero\n2.Acessar os originais ou OUTRA BASE DE DADOS:");
+                opcao = Biblioteca.ledireito(opcao);
+                opcao.trim();
+                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+            }
         }
 
-
+        while(saida == 0){
+        System.out.println("\nAVISO! Lembre-se de acessar bases de dados irmãs para evitar conflitos e falhas na execução\n");
+        if(chave ==1){
+            lib = new Biblioteca();
+            saida+=1;
+        }
+        else{
+            if(chave == 2){
+                    lib = new Biblioteca();
+                    lib.setuserfilename();
+                    lib.setbooksfilename();
+                    lib.leArquivo(lib.getuserfilename(),1);
+                    lib.leArquivo(lib.getbookfilename(),2);
+                    lib.salvatudo();
+                    saida+=1;
+            
+            }
+        }
+        if(saida==0){
+        System.out.println("\nAVISO! Lembre-se de acessar bases de dados irmãs e que existam para evitar conflitos e falhas na execução\n");
+        opcao ="";chave =0;
+        while(opcao.equals(empty) || !checkString(opcao) || chave<1 || chave>2){
+                System.out.println("BEM VINDO A BIBLIOTECA - VAMOS COMECAR:\n1.COMECAR COM OS ARQUIVOS firstversion_users_tb.dat e firstversion_books_tb.dat\n2.OUTRA BASE DE DADOS:");
+                opcao = Biblioteca.ledireito(opcao);
+                opcao.trim();
+                if(checkString(opcao)){chave = Integer.parseInt(opcao);}
+            }
+        }
+        }
+        return lib;
     }
-    
 
 }
