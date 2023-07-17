@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-public class P2nX{
+public class P4nX{
     public static final String empty = "";
     public static Boolean checkString(String arg){ // metodo pra verificar strings como idade e cpf se estão apenas com caractefes numericos//
         arg = arg.trim();

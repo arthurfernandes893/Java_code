@@ -1,0 +1,17 @@
+BEM-VINDO A BASE DE DADOS DOS IMCs pré-cadastrados.
+Somos uma base de dados recente e ainda estamos esperando outra remessa de dados. 
+
+Sinta-se a vontade para buscar os dados que temos disponíveis
+
+MODO DE USO:
+    Selecione nos botoes no canto superior da tela a forma que deseja puxar os dados e comece a sua visualizacao
+        AFALBETICA
+            A-Z
+            Z-A
+        MENOR PESO
+        MAIOR PESO
+        ALTURA
+        GENERO
+        IMC
+
+    

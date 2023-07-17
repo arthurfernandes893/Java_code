@@ -1,16 +1,24 @@
 import java.awt.event.*;
 import javax.swing.*;
+
+
 import java.awt.*;
 public class MLOGui{
         public MinhaListaOrdenavel array;
         public ButtonPressed bp;
         public MLOGui(MinhaListaOrdenavel pessoas){
             this.array = pessoas;
-            bp = new ButtonPressed(pessoas);
+            
+            JTextArea lista = new JTextArea(8, 80);
+            JPanel lista_container = new JPanel();
             JFrame tela = new JFrame();
             JPanel frame = new JPanel();
+            JScrollPane scrollPane = new JScrollPane(lista);
+            JPanel intro = new JPanel();
 
-            tela.setSize(800,500);
+            bp = new ButtonPressed(pessoas,lista);
+
+            tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
             JButton b1 = new JButton("ALFABETICA(A-Z)");
             JButton b2 = new JButton("ALFABETICA(Z-A)");
@@ -36,8 +44,21 @@ public class MLOGui{
             b6.addActionListener(bp);
             b7.addActionListener(bp);
             
+            lista.setToolTipText("LISTAGEM DE PESSOAS COM IMC");
+            lista.setLineWrap(true);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             
-            tela.add(frame);
+            lista_container.setBackground(new Color(89, 248, 232));
+            frame.setBackground(new Color(19,246,224));
+            lista.setFont(new Font("Verdana", Font.LAYOUT_LEFT_TO_RIGHT , 14));
+            lista.setMargin(new Insets(15, 25, 15, 0));
+            lista.setEditable(false);
+            
+            tela.setTitle("LISTA ORDENAVEL DE IMCs");
+
+            intro.add(new JLabel("BEM VINDO A BASE DE DADOS DOS IMCs. selecione a opcao que deseja para ordenar as informações")).setBackground(new Color(196, 253, 247));
+
+            lista_container.add(lista);
             frame.add(b1);
             frame.add(b2);
             frame.add(b3);
@@ -45,17 +66,13 @@ public class MLOGui{
             frame.add(b5);
             frame.add(b6);
             frame.add(b7);
-            
-            frame.setVisible(true);
+            frame.add(lista_container);
+            frame.add(intro);
+           
             tela.add(frame);
+            frame.setVisible(true);
+            tela.setVisible(true);
+
         }
-        
-
-       // JPanel lista = new JPanel();
-         
-    
-
-        //mudar lista pessoas //
-
         
 }
