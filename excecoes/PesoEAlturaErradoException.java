@@ -10,7 +10,7 @@ public class PesoEAlturaErradoException extends NumberFormatException{
     public float criapesocerto(String line) throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         float aux = 0;
-        while(line.equals(P2nX.empty) || !P2nX.checkString(line) || aux<1 || aux>200){
+        while(line.equals(P4nX.empty) || !P4nX.checkString(line) || aux<1 || aux>200){
             System.out.println("Peso fora dos padroes de caractere ou campo vazio.");
             line = inData.readLine();
             aux = Float.parseFloat(line);
@@ -21,7 +21,7 @@ public class PesoEAlturaErradoException extends NumberFormatException{
     public float criaalturacerta(String line) throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
         float aux = 0;
-        while(line.equals(P2nX.empty) || !P2nX.checkString(line) || aux<0.5 || aux>3){
+        while(line.equals(P4nX.empty) || !P4nX.checkString(line) || aux<0.5 || aux>3){
             System.out.println("Peso fora dos padroes de caractere ou campo vazio.");
             line = inData.readLine();
             aux = Float.parseFloat(line);
