@@ -94,4 +94,17 @@ public class MinhaListaOrdenavel{
             add(wm);
         }
     } 
+    public static void listaPessoas(ArrayList<PessoaIMC> pessoas){
+        Homem h; Mulher m;
+        for(PessoaIMC a : pessoas){
+            if(a instanceof Homem){
+                h = (Homem) a;
+                System.out.println(h);
+            }
+            else{
+                m = (Mulher) a;
+                System.out.println(m);
+            }
+        }
+    }
 }   

@@ -15,19 +15,7 @@ public class P2nX{
         }
         return ehnum;
     }
-    public static void listaPessoas(ArrayList<PessoaIMC> pessoas){
-        Homem h; Mulher m;
-        for(PessoaIMC a : pessoas){
-            if(a instanceof Homem){
-                h = (Homem) a;
-                System.out.println(h);
-            }
-            else{
-                m = (Mulher) a;
-                System.out.println(m);
-            }
-        }
-    }
+   
 
     public static void menu(MinhaListaOrdenavel array) throws IOException{
         BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
@@ -47,34 +35,18 @@ public class P2nX{
             }
             else{
                 array.compara(chave);
-                listaPessoas(array.pessoas);
+                MinhaListaOrdenavel.listaPessoas(array.pessoas);
             }
         }
     }
+
     public static void main(String[] args) throws IOException{
         //criacao do arraylist//
         MinhaListaOrdenavel array = new MinhaListaOrdenavel();
         for(int i = 0;i<10;i++){
             array.cirapreset(i);
         }
+        MLOGui screen = new MLOGui(array);
 
-        //menu
-        BufferedReader inData = new BufferedReader(new InputStreamReader(System.in));
-        String line; int chave;
-        System.out.println("1.Imprimir Lista\n2.Sair");
-        line = inData.readLine(); 
-        line.trim(); 
-        chave = Integer.parseInt(line); //alterar checkstring e criar outra versao pra float//
-        while(line.equals(empty) || !checkString(line) || chave>2 || chave<1){
-            System.out.println("1.Imprimir Lista\n2.Sair");
-            line = inData.readLine(); 
-            line.trim();
-            chave = Integer.parseInt(line);
-        }
-
-        if(chave == 2){System.exit(1);} //se 2, encerra o programa, senao, apresenta opcoes//
-        else{
-            menu(array);
-        }
     }
 }
