@@ -1,3 +1,5 @@
+package bmibank;
+
 import java.util.GregorianCalendar;
 
 public abstract class PessoaIMC extends Pessoa{

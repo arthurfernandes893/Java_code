@@ -1,8 +1,11 @@
-import java.awt.event.*;
-import javax.swing.*;
-
+package bmibank;
 
 import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import javax.swing.*;
+import java.awt.*;
+
 public class MLOGui{
         public MinhaListaOrdenavel array;
         public ButtonPressed bp;
@@ -11,11 +14,15 @@ public class MLOGui{
             
             JTextArea lista = new JTextArea(8, 80);
             JPanel lista_container = new JPanel();
+            
             JFrame tela = new JFrame();
             JPanel frame = new JPanel();
+            
+            
             JScrollPane scrollPane = new JScrollPane(lista);
+            
             JPanel intro = new JPanel();
-
+        
             bp = new ButtonPressed(pessoas,lista);
 
             tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +50,8 @@ public class MLOGui{
             b5.addActionListener(bp);
             b6.addActionListener(bp);
             b7.addActionListener(bp);
-            
+         
+
             lista.setToolTipText("LISTAGEM DE PESSOAS COM IMC");
             lista.setLineWrap(true);
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -57,6 +65,7 @@ public class MLOGui{
             tela.setTitle("LISTA ORDENAVEL DE IMCs");
 
             intro.add(new JLabel("BEM VINDO A BASE DE DADOS DOS IMCs. selecione a opcao que deseja para ordenar as informações")).setBackground(new Color(196, 253, 247));
+            FormGui form = new FormGui(pessoas);
 
             lista_container.add(lista);
             frame.add(b1);
@@ -67,8 +76,10 @@ public class MLOGui{
             frame.add(b6);
             frame.add(b7);
             frame.add(lista_container);
+            frame.add(form);
             frame.add(intro);
-           
+            
+
             tela.add(frame);
             frame.setVisible(true);
             tela.setVisible(true);

@@ -1,9 +1,11 @@
+package bmibank;
+
 import java.io.*;
 import java.util.*;
 
 public class MinhaListaOrdenavel{
     //criar arraylist de pessoaimc pois eh a superclasse comum aos dois//
-    ArrayList<PessoaIMC> pessoas = new ArrayList<>();
+    public ArrayList<PessoaIMC> pessoas = new ArrayList<>();
     public MinhaListaOrdenavel(){}
 
     //metod add e get necessarios por conta do polimorfismo//
@@ -108,7 +110,10 @@ public class MinhaListaOrdenavel{
                 listagem+=m+"\n";
             }
         }
-        System.out.println(listagem+"\n");
+        System.out.println("ordenação feita com sucesso");
         return listagem;
+    }
+    public ArrayList<PessoaIMC> getpessoas(){
+        return pessoas;
     }
 }   

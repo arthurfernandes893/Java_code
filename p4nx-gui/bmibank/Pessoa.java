@@ -1,3 +1,5 @@
+package bmibank;
+
 import java.util.*;
 
 public class Pessoa{
