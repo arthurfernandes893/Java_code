@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.GregorianCalendar;
 public class FormGui extends JPanel implements ActionListener{
-    public JFrame formulario;
+    public JPanel formulario;
     public JPanel form;
     public JPanel nome;
     public JPanel sobrenome;
@@ -28,8 +28,8 @@ public class FormGui extends JPanel implements ActionListener{
 
         setSize(500, 700);
 
-        formulario = new JFrame("Cadastro");
-        form = new JPanel(); //orientar na vertical
+        formulario = new JPanel(new BoxLayout(formulario, BoxLayout.Y_AXIS));
+        form = new JPanel(); 
         
         nome = new JPanel();
         nome.add(new JLabel("nome:"));
@@ -90,7 +90,7 @@ public class FormGui extends JPanel implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        String nome,sobrenome,genero;
+        String nome,sobrenome;
         float peso,altura;
         int dia,mes,ano;
         
@@ -102,6 +102,12 @@ public class FormGui extends JPanel implements ActionListener{
         peso = Float.parseFloat((String) pesofield.getText()+"");
         altura = Float.parseFloat((String) alturafield.getText()+"");
 
+        /*
+         * usar error message padrao do java pra jogar excecao
+         * usar gerenciador de layout!!!!!!! 
+         * mensagem de erro nao eh necessaria - mas ajuda 
+         * 
+         */
         if(((String) generoselector.getSelectedItem()).equals("masculino")){
             Homem h = new Homem(nome, sobrenome, new GregorianCalendar(ano,mes,dia), peso, altura);
             array.add((PessoaIMC) h);
